@@ -7,7 +7,6 @@ export function dashboard() {
             let username = inputUsername.value;
             let password = inputPassword.value;
             let credentials = { username: username, password: password };
-            debugger
             e.preventDefault();
             e.stopPropagation();
             const url = "/api/authenticate";
@@ -27,19 +26,8 @@ export function dashboard() {
         });
     function renderPage(hash: string){
         let isAuthenticated = sessionStorage.getItem('token')!=null;
-        renderForm(hash, isAuthenticated);
     }
     window.addEventListener("hashchange", function () {
         renderPage(window.location.hash);
     });
-    function renderForm(selector: string, isAuthenticated: boolean){
-        // if(isAuthenticated && selector=="#login")
-        //     document.querySelector(selector).classList.add("hidden");
-        // else if(!isAuthenticated && selector=="#login")
-        //     document.querySelector(selector).classList.remove("hidden");
-        // if(selector=="#register"){
-        //     document.querySelector(selector).classList.remove("hidden");
-        //     document.querySelector("#login").classList.add("hidden");
-        // }
-    }
 }
