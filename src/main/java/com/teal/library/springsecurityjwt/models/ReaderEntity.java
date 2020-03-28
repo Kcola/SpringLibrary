@@ -14,6 +14,7 @@ public class ReaderEntity {
     private String zipcode;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "readerid")
     public int getReaderid() {
         return readerid;

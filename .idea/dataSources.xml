@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="386b81aa-d2ab-49f9-b689-253bb82cd933">
+    <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="cf3e361b-6fc3-46d8-905c-24139227b1e4">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
       <remarks>Hibernate
 
-/Users/kcampbell/IdeaProjects/SpringLibrary/src/main/resources/hibernate.cfg.xml</remarks>
+C:/Users/kwizl/IdeaProjects/SpringLibrary/src/main/resources/hibernate.cfg.xml</remarks>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://spring-library.cxq7pgjkmbdi.us-east-1.rds.amazonaws.com/Library</jdbc-url>
     </data-source>

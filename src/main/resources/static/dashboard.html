@@ -14,6 +14,9 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
     integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
     crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
   <title>Library</title>
 </head>
 <header>
@@ -62,11 +65,11 @@
 </head>
 
 <body>
-<div class="row" style="height: 92vh">
+<div id="login" class="row" style="height: 92vh">
   <div class="col col-auto ml-auto mr-auto my-auto">
     <div class="row">
-      <div class="col col-auto">
-        <div id="register" class="row">
+      <div class="col col-auto d-none d-md-block">
+        <div class="row">
           <div class="col col-auto ml-auto mr-auto my-auto">
             <div class="row formContainer" style="width:700px">
               <div class="col col-auto mr-auto ml-auto my-auto">
@@ -107,16 +110,80 @@
                       </div>
                       <div class="row form-group">
                       <div class="col col-auto">
-                        <input type="address" class="form-control bg-light inputs" id="registerAddress"
-                               placeholder="Enter Address" />
+                        <input type="address" class="form-control bg-light inputs" id="registerStreetAddress" style="width: 571px"
+                               placeholder="Enter Street Address" />
                       </div>
+                      </div>
+                      <div class="row form-group">
+                        <div class="col col-auto">
+                          <input type="city" class="form-control bg-light inputs" id="registerCity" style="width: 165px"
+                                 placeholder="Enter City" />
+                        </div>
+
+                        <div class="col col-auto">
+                          <select class="form-control" id="registerState" name="state" placeholder ="State">
+                            <option value="">State</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AL">Alabama</option>
+                            <option value="AR">Arkansas</option>
+                            <option value="AZ">Arizona</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DC">District of Columbia</option>
+                            <option value="DE">Delaware</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="IA">Iowa</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MD">Maryland</option>
+                            <option value="ME">Maine</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MT">Montana</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NY">New York</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="PR">Puerto Rico</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="UT">Utah</option>
+                            <option value="VA">Virginia</option>
+                            <option value="VT">Vermont</option>
+                            <option value="WA">Washington</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WY">Wyoming</option>
+                          </select>
+                        </div>
                       <div class="col col-auto">
-                        <input type="zipcode" class="form-control bg-light inputs" id="registerZipcode"
+                        <input type="zipcode" class="form-control bg-light inputs" id="registerZipcode" style="width: 165px"
                                placeholder="Enter Zipcode" />
                       </div>
+                      </div>
                     </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
                   </form>
                 </div>
               </div>
@@ -125,7 +192,7 @@
         </div>
       </div>
       <div class="col col-auto">
-        <div id="login" class="row">
+        <div class="row">
           <div class="col col-auto ml-auto mr-auto my-auto">
             <div class="row formContainer">
               <div class="col col-auto mr-auto ml-auto my-auto" style="width:300px">
@@ -140,11 +207,8 @@
                       <input type="password" class="form-control bg-light inputs" id="password" placeholder="Password" />
                     </div>
                     <div class="row">
-                      <div class="col col-auto my-auto">
-                        <a id="registerAnchor" href="#register">Create Account</a>
-                      </div>
                       <div class="col col-auto ml-auto my-auto">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary" >Log In</button>
                       </div>
                     </div>
                   </form>
@@ -160,11 +224,11 @@
   </div>
 </div>
 
+<script src="app.js"></script>
 </body>
 
 </html>
 
 
-<script src="app.js"></script>
 
 </html>

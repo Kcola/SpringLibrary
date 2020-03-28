@@ -10,6 +10,7 @@ import com.teal.library.springsecurityjwt.viewmodels.UserForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.hibernate.Session;
 import org.hibernate.query.*;
+import org.springframework.web.client.HttpClientErrorException;
+
 import java.util.List;
 
 @RestController
@@ -51,19 +54,22 @@ class LoginController {
     }
 
     @RequestMapping(value = "/api/register", method = RequestMethod.POST)
-    public int RegisterUser(@RequestBody UserForm user){
+    public ResponseEntity<?> RegisterUser(@RequestBody UserForm user){
         LOGGER.info("Received request from /register endpoint");
         DataAccess db = new DataAccess();
         boolean flag = db.ExistsUser(user.getUsername());
         if(!flag) {
             try {
-                registrationService.RegisterUser(user);
-                return 1;
+                int success = registrationService.RegisterUser(user);
+                if(success != -1)
+                    return ResponseEntity.ok("");
+                else
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             } catch (Exception e) {
                 LOGGER.info(e.getMessage());
             }
         }
-        return -1;
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @RestController

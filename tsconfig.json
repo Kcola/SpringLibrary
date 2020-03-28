@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": [ "es2015", "dom" ],
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "moduleResolution": "node"
   }
 }
