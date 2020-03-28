@@ -6,14 +6,28 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://library.cxq7pgjkmbdi.us-east-1.rds.amazonaws.com/Library</property>
-        <property name="hibernate.connection.username">admin</property>
-        <property name="hibernate.connection.password">cs684library</property>
+        <property name="hibernate.connection.url">jdbc:mysql://spring-library.cxq7pgjkmbdi.us-east-1.rds.amazonaws.com/Library</property>
+        <property name = "hibernate.connection.username">admin</property>
+        <property name = "hibernate.connection.password">cs684library</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="hbm2ddl.auto">update </property>
-        <mapping resource="users.hbm.xml" />
-        <mapping resource="reader.hbm.xml" />
+        <mapping class="com.teal.library.springsecurityjwt.models.AuthorEntity"/>
+        <mapping class="com.teal.library.springsecurityjwt.models.BookEntity"/>
+        <mapping class="com.teal.library.springsecurityjwt.models.BorrowsEntity"/>
+        <mapping class="com.teal.library.springsecurityjwt.models.BranchEntity"/>
+        <mapping class="com.teal.library.springsecurityjwt.models.ChiefEditorEntity"/>
+        <mapping class="com.teal.library.springsecurityjwt.models.CopyEntity"/>
+        <mapping class="com.teal.library.springsecurityjwt.models.DocumentEntity"/>
+        <mapping class="com.teal.library.springsecurityjwt.models.InvEditorEntity"/>
+        <mapping class="com.teal.library.springsecurityjwt.models.JournalIssueEntity"/>
+        <mapping class="com.teal.library.springsecurityjwt.models.JournalVolumeEntity"/>
+        <mapping class="com.teal.library.springsecurityjwt.models.ProceedingsEntity"/>
+        <mapping class="com.teal.library.springsecurityjwt.models.PublisherEntity"/>
+        <mapping class="com.teal.library.springsecurityjwt.models.ReaderEntity"/>
+        <mapping class="com.teal.library.springsecurityjwt.models.ReservesEntity"/>
+        <mapping class="com.teal.library.springsecurityjwt.models.UsersEntity"/>
+        <mapping class="com.teal.library.springsecurityjwt.models.WritesEntity"/>
     </session-factory>
 </hibernate-configuration>

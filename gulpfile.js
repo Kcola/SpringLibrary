@@ -60,4 +60,4 @@ function watch() {
 }
 gulp.task("watch", watch);
 
-gulp.task("default", gulp.series("build", "watch"));
+gulp.task("default", gulp.series("build"));

@@ -1,6 +1,6 @@
 package com.teal.library.springsecurityjwt;
 
-import com.teal.library.springsecurityjwt.models.UserModel;
+import com.teal.library.springsecurityjwt.models.*;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +17,7 @@ public class LibraryUserDetailsService implements UserDetailsService {
         }
         return toUserDetails(db.ValidateUser(username));
     }
-    private UserDetails toUserDetails(UserModel userModel) {
+    private UserDetails toUserDetails(UsersEntity userModel) {
         return User.withUsername(userModel.getUsername())
                 .password(userModel.getPassword())
                 .roles(userModel.getRole()).build();

@@ -1,7 +1,9 @@
 package com.teal.library.springsecurityjwt;
 
-import com.teal.library.springsecurityjwt.models.UserModel;
+import com.teal.library.springsecurityjwt.models.*;
+import com.teal.library.springsecurityjwt.models.UsersEntity;
 import com.teal.library.springsecurityjwt.viewmodels.UserForm;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,7 @@ public class LibraryRegistrationService {
 //        }
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         DataAccess db = new DataAccess();
-            UserModel newUserModel = new UserModel();
+            UsersEntity newUserModel = new UsersEntity();
             newUserModel.setFirstname(user.getFirstname());
             newUserModel.setLastname(user.getLastname());
             newUserModel.setPassword(passwordEncoder.encode(user.getPassword()));

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="LibraryAWS" uuid="fc468ac4-f3e0-4c04-9502-03fd935a7a58">
-      <driver-ref>mysql.8</driver-ref>
+    <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="386b81aa-d2ab-49f9-b689-253bb82cd933">
+      <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://library.cxq7pgjkmbdi.us-east-1.rds.amazonaws.com:3306/Library</jdbc-url>
+      <imported>true</imported>
+      <remarks>Hibernate
+
+/Users/kcampbell/IdeaProjects/SpringLibrary/src/main/resources/hibernate.cfg.xml</remarks>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://spring-library.cxq7pgjkmbdi.us-east-1.rds.amazonaws.com/Library</jdbc-url>
     </data-source>
   </component>
 </project>

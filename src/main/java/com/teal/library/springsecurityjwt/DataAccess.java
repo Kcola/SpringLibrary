@@ -10,11 +10,11 @@ import java.util.List;
 
 public class DataAccess {
 
-    public int AddUser(UserModel userModel, int readerid){
+    public int AddUser(UsersEntity userModel, int readerid){
         try{
             Session session = HibernateORM.getSessionFactory().openSession();
             session.beginTransaction();
-            userModel.setReaderID(readerid);
+            userModel.setReaderid(readerid);
             session.save(userModel);
             session.getTransaction().commit();
             return 1;
@@ -26,7 +26,7 @@ public class DataAccess {
     }
     public int AddReader(UserForm user){
         try{
-            ReaderModel newReaderModel = new ReaderModel();
+            ReaderEntity newReaderModel = new ReaderEntity();
             newReaderModel.setFirstname(user.getFirstname());
             newReaderModel.setLastname(user.getLastname());
             newReaderModel.setAddress(user.getAddress());
@@ -46,22 +46,22 @@ public class DataAccess {
     }
     public boolean ExistsUser(String username){
         Session session = HibernateORM.getSessionFactory().openSession();
-        Query query = session.createQuery("from UserModel where username = :username");
+        Query query = session.createQuery("from UsersEntity where username = :username");
         query.setParameter("username", username);
-        List<UserModel> list = query.list();
+        List<UsersEntity> list = query.list();
         if(list.size() == 0)
             return false;
         else
             return true;
     }
-    public UserModel ValidateUser(String username){
+    public UsersEntity ValidateUser(String username){
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Session session = HibernateORM.getSessionFactory().openSession();
-        Query query = session.createQuery("from UserModel where username = :username");
+        Query query = session.createQuery("from UsersEntity where username = :username");
         query.setParameter("username", username);
         //query.setParameter("password", passwordEncoder.encode(password));
-        List<UserModel> list = query.list();
-        UserModel userModel = list.get(0);
+        List<UsersEntity> list = query.list();
+        UsersEntity userModel = list.get(0);
         return userModel;
     }
 }
