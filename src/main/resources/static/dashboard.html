@@ -65,6 +65,7 @@
 </head>
 
 <body>
+<div id="page-content-wrapper">
 <div id="login" class="row" style="height: 92vh">
   <div class="col col-auto ml-auto mr-auto my-auto">
     <div class="row">
@@ -221,6 +222,36 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+<div id="dashboard">
+  <div class="d-flex" id="wrapper" >
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper" style="height: 94vh;">
+      <div id="loggedInUser" class="sidebar-heading">User</div>
+      <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Borrowed</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Reserved</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Schedule Appointment</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Subscription</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+
+      <div class="container-fluid" style="height: 91.5vh;">
+        <div class="card" style="width: 100%; height: 100%; margin-top: 12px;">
+          <div class="card-body">
+            <div id="grid"></div>
+          </div>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
   </div>
 </div>
 

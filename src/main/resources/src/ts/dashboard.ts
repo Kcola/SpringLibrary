@@ -13,6 +13,16 @@ export function dashboard() {
         username: string,
         password: string
     }
+    interface Reader{
+        readerid : number,
+        email: string,
+        rtype: "admin"|"user",
+        firstname: string,
+        lastname: string,
+        address: string,
+        zipcode: string
+    }
+
     renderPage(window.location.hash);
     document.getElementById("loginForm")
         .addEventListener("submit", async function (e) {
@@ -80,6 +90,7 @@ export function dashboard() {
             else
                 alert("Username already exists");
         });
+
     function renderPage(hash: string){
         debugger;
         let isAuthenticated = typeof sessionStorage.getItem('token') === "string";
@@ -88,10 +99,27 @@ export function dashboard() {
     function renderLogin(isAuthenticated: boolean){
         if(isAuthenticated){
             document.getElementById("login").classList.add("hidden");
+            renderDashboard();
         }
         else{
             window.location.hash = "login"
             document.getElementById("login").classList.remove("hidden");
+        }
+    }
+    async function renderDashboard(){
+        const url = "/api/userinfo"
+        const response = await fetch(url, {
+            method: 'Get',
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+            }
+        });
+        const reader = await response.json() as Reader;
+        if(response.status === 200){
+            document.getElementById("loggedInUser").textContent = `${reader.firstname} ${reader.lastname}`;
+        }
+        else{
+            alert("Error retrieving user info")
         }
     }
     window.addEventListener("hashchange", function () {

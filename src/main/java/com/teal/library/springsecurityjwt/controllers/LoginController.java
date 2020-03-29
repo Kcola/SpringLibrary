@@ -5,6 +5,7 @@ import com.teal.library.springsecurityjwt.LibraryRegistrationService;
 import com.teal.library.springsecurityjwt.LibraryUserDetailsService;
 import com.teal.library.springsecurityjwt.models.AuthenticationRequest;
 import com.teal.library.springsecurityjwt.models.AuthenticationResponse;
+import com.teal.library.springsecurityjwt.models.ReaderEntity;
 import com.teal.library.springsecurityjwt.util.JwtUtil;
 import com.teal.library.springsecurityjwt.viewmodels.UserForm;
 import org.slf4j.Logger;
@@ -15,13 +16,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.hibernate.Session;
 import org.hibernate.query.*;
 import org.springframework.web.client.HttpClientErrorException;
@@ -52,7 +51,12 @@ class LoginController {
         LOGGER.info("Received request from /hello endpoint");
         return "Hello World";
     }
-
+    @RequestMapping(value = "api/userinfo", method = RequestMethod.GET)
+    public ResponseEntity<?> currentUserName(Authentication authentication) {
+        DataAccess db = new DataAccess();
+        ReaderEntity reader = db.GetUserInfo(authentication.getName());
+        return ResponseEntity.ok(reader);
+    }
     @RequestMapping(value = "/api/register", method = RequestMethod.POST)
     public ResponseEntity<?> RegisterUser(@RequestBody UserForm user){
         LOGGER.info("Received request from /register endpoint");

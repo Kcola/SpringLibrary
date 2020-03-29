@@ -3,8 +3,6 @@ import com.teal.library.springsecurityjwt.viewmodels.UserForm;
 import org.hibernate.Session;
 import org.hibernate.query.*;
 import com.teal.library.springsecurityjwt.models.*;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -55,13 +53,29 @@ public class DataAccess {
             return true;
     }
     public UsersEntity ValidateUser(String username){
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Session session = HibernateORM.getSessionFactory().openSession();
         Query query = session.createQuery("from UsersEntity where username = :username");
         query.setParameter("username", username);
-        //query.setParameter("password", passwordEncoder.encode(password));
         List<UsersEntity> list = query.list();
         UsersEntity userModel = list.get(0);
         return userModel;
+    }
+
+    public ReaderEntity GetUserInfo(String username) {
+        Session session = HibernateORM.getSessionFactory().openSession();
+        Query query = session.createQuery("select reader.readerid, reader.address, reader.email, reader.rtype, reader.zipcode, reader.firstname, reader.lastname from ReaderEntity reader," +
+                "UsersEntity user where user.readerid = reader.readerid and user.username = :username");
+        query.setParameter("username", username);
+        List<Object[]> list = query.list();
+        Object[] prop  = list.get(0);
+        ReaderEntity reader = new ReaderEntity();
+        reader.setReaderid((Integer)prop[0]);
+        reader.setAddress(prop[1].toString());
+        reader.setEmail(prop[2].toString());
+        reader.setRtype(prop[3].toString());
+        reader.setZipcode(prop[4].toString());
+        reader.setFirstname(prop[5].toString());
+        reader.setLastname(prop[6].toString());
+        return reader;
     }
 }
