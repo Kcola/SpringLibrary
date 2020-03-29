@@ -22,13 +22,22 @@ export function dashboard() {
         address: string,
         zipcode: string
     }
-
+    function validUserName(s: string) {
+        return /^[a-z0-9]+$/i.test(s);
+    }
+    function validateRegistrationObject(obj: any) {
+        for (let key in obj) {
+            if (obj[key] === null || obj[key] === "")
+                return false;
+        }
+        return true;
+    }
     renderPage(window.location.hash);
     document.getElementById("loginForm")
         .addEventListener("submit", async function (e) {
             let inputUsername = document.getElementById("email")! as HTMLInputElement;
             let inputPassword = document.getElementById("password")! as HTMLInputElement;
-            let username = inputUsername.value;
+            let username = inputUsername.value.toLocaleLowerCase();
             let password = inputPassword.value;
             let credentials = { username: username, password: password } as ReturningUser;
             e.preventDefault();
@@ -61,7 +70,12 @@ export function dashboard() {
                 alert("Password doesnt match");
                 return;
             }
+
             let inputUsername = document.getElementById("registerUsername")! as HTMLInputElement;
+            if(!validUserName(inputUsername.value)){
+                alert("Username can only contain letters and/or numbers");
+                return;
+            }
             let inputEmail = document.getElementById("registerEmail")! as HTMLInputElement;
             let inputFirstname = document.getElementById("registerFirstname")! as HTMLInputElement;
             let inputLastname = document.getElementById("registerLastname")! as HTMLInputElement;
@@ -69,7 +83,7 @@ export function dashboard() {
             let inputZipcode = document.getElementById("registerZipcode")! as HTMLInputElement;
             let pickState = document.getElementById("registerState")! as HTMLSelectElement;
             let streetAddress = document.getElementById("registerStreetAddress")! as HTMLInputElement;
-            register.username = inputUsername.value;
+            register.username = inputUsername.value.toLocaleLowerCase();
             register.password = inputPassword.value;
             register.email = inputEmail.value;
             register.firstname = inputFirstname.value;
@@ -77,22 +91,27 @@ export function dashboard() {
             register.zipcode = inputZipcode.value;
             register.address = `${streetAddress.value}, ${inputCity.value}, ${pickState.value}${register.zipcode}`;
             register.type = "admin";
-            const url = "/api/register";
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(register)
-            });
-            if(response.status ==200)
-                alert("You can now sign in");
-            else
-                alert("Username already exists");
+            if(validateRegistrationObject(register)){
+                const url = "/api/register";
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(register)
+                });
+                if(response.status ==200)
+                    alert("You can now sign in");
+                else
+                    alert("Username already exists");
+            }
+            else{
+                alert("Fill out all registration fields");
+            }
+
         });
 
     function renderPage(hash: string){
-        debugger;
         let isAuthenticated = typeof sessionStorage.getItem('token') === "string";
         renderLogin(isAuthenticated);
     }
