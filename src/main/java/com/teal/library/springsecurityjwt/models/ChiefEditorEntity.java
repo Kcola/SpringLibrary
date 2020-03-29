@@ -3,7 +3,7 @@ package com.teal.library.springsecurityjwt.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "chief_editor", schema = "Library", catalog = "")
+@Table(name = "chief_editor", schema = "dbo", catalog = "library")
 public class ChiefEditorEntity {
     private int editorId;
     private String ename;

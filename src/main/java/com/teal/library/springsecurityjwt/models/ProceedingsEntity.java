@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "proceedings", schema = "Library", catalog = "")
+@Table(name = "proceedings", schema = "dbo", catalog = "library")
 public class ProceedingsEntity {
     private int docid;
     private Date cdate;

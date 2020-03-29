@@ -3,7 +3,7 @@ package com.teal.library.springsecurityjwt.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "reader", schema = "Library", catalog = "")
+@Table(name = "reader", schema = "dbo", catalog = "library")
 public class ReaderEntity {
     private int readerid;
     private String email;

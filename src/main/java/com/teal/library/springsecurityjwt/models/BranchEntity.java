@@ -3,7 +3,7 @@ package com.teal.library.springsecurityjwt.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "branch", schema = "Library", catalog = "")
+@Table(name = "branch", schema = "dbo", catalog = "library")
 public class BranchEntity {
     private int libid;
     private String lname;

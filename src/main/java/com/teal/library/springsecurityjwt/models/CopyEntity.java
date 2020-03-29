@@ -3,7 +3,7 @@ package com.teal.library.springsecurityjwt.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "copy", schema = "Library", catalog = "")
+@Table(name = "copy", schema = "dbo", catalog = "library")
 public class CopyEntity {
     private int docid;
     private String copyid;

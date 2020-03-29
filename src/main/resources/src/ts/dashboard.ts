@@ -32,8 +32,13 @@ export function dashboard() {
                 body: JSON.stringify(credentials)
             });
             const token = await response.json();
-            sessionStorage.setItem('token', token.jwt);
-            window.location.hash = "dashboard"
+            if(response.status === 200){
+                sessionStorage.setItem('token', token.jwt);
+                window.location.hash = "dashboard"
+            }
+            else{
+                alert("Invalid Credentials")
+            }
     });
     document.getElementById("registerForm")
         .addEventListener("submit", async function (e){
@@ -76,7 +81,8 @@ export function dashboard() {
                 alert("Username already exists");
         });
     function renderPage(hash: string){
-        let isAuthenticated = sessionStorage.getItem('token')!=null;
+        debugger;
+        let isAuthenticated = typeof sessionStorage.getItem('token') === "string";
         renderLogin(isAuthenticated);
     }
     function renderLogin(isAuthenticated: boolean){

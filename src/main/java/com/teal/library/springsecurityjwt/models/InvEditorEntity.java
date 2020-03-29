@@ -3,7 +3,7 @@ package com.teal.library.springsecurityjwt.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "inv_editor", schema = "Library", catalog = "")
+@Table(name = "inv_editor", schema = "dbo", catalog = "library")
 @IdClass(InvEditorEntityPK.class)
 public class InvEditorEntity {
     private int docid;
