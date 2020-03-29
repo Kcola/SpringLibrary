@@ -24,19 +24,19 @@ gulp.task("panini", function (done) {
         data: "src/main/resources/src/data/"
       })
     )
-    .pipe(gulp.dest("src/main/resources/static"));
+    .pipe(gulp.dest("src/main/resources/public"));
   done();
 });
 gulp.task("copy:css", function () {
-  return gulp.src("src/main/resources/src/css/*.css").pipe(gulp.dest("src/main/resources/static/css/"));
+  return gulp.src("src/main/resources/src/css/*.css").pipe(gulp.dest("src/main/resources/public/css/"));
 });
 gulp.task('ts', () => {
   return gulp.src('src/main/resources/src/ts/app.ts')
     .pipe(webpackStream(webpackConfig), webpack)
-    .pipe(gulp.dest('src/main/resources/static'));
+    .pipe(gulp.dest('src/main/resources/public'));
 });
 gulp.task('clean', function (cb) {
-  rimraf('src/main/resources/static', cb);
+  rimraf('src/main/resources/public', cb);
 });
 gulp.task("build", gulp.series("clean", "copy:css", "ts", "panini"));
 function resetPages(done) {

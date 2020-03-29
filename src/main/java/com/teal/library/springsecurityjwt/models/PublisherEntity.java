@@ -8,6 +8,7 @@ public class PublisherEntity {
     private int publisherid;
     private String pubname;
     private String address;
+    private String zipcode;
 
     @Id
     @Column(name = "publisherid")
@@ -59,5 +60,15 @@ public class PublisherEntity {
         result = 31 * result + (pubname != null ? pubname.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "zipcode")
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
     }
 }

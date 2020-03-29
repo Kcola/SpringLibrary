@@ -17,6 +17,11 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
           integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
           crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.1.219/styles/kendo.common.min.css" />
+  <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.1.219/styles/kendo.bootstrap.min.css" />
+  <script src="https://kendo.cdn.telerik.com/2018.1.221/js/kendo.all.min.js"></script>
+  <script src="https://kendo.cdn.telerik.com/2018.1.221/js/kendo.timezones.min.js"></script>
+  <script src="https://kendo.cdn.telerik.com/2020.1.219/js/kendo.all.min.js"></script>
   <title>Library</title>
 </head>
 <header>
@@ -66,7 +71,7 @@
 
 <body>
 <div id="page-content-wrapper">
-<div id="login" class="row" style="height: 92vh">
+<div id="login" class="row hidden" style="height: 92vh">
   <div class="col col-auto ml-auto mr-auto my-auto">
     <div class="row">
       <div class="col col-auto d-none d-md-block">
@@ -224,9 +229,8 @@
     </div>
   </div>
 </div>
-<div id="dashboard">
+<div id="dashboard" class="hidden">
   <div class="d-flex" id="wrapper" >
-
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper" style="height: 94vh;">
       <div id="loggedInUser" class="sidebar-heading">User</div>

@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class BookEntity {
     private int docid;
     private String isbn;
+    private String genre;
 
     @Id
     @Basic
@@ -18,7 +19,6 @@ public class BookEntity {
     public void setDocid(int docid) {
         this.docid = docid;
     }
-
 
     @Basic
     @Column(name = "isbn")
@@ -48,5 +48,15 @@ public class BookEntity {
         int result = docid;
         result = 31 * result + (isbn != null ? isbn.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "genre")
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }

@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -67,13 +68,13 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable()
-				.authorizeRequests().antMatchers("/api/register").permitAll()
-				.antMatchers("/api/authenticate").permitAll()
+				.authorizeRequests().antMatchers("/api/register","/api/authenticate","/*.html", "/", "/css/*.css", "/*.js","/favicon.ico").permitAll()
 						.anyRequest().authenticated().and().
 						exceptionHandling().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-		httpSecurity.authorizeRequests().antMatchers("/resources/**").permitAll().anyRequest().permitAll();
+
+		httpSecurity.authorizeRequests().antMatchers("/index.html").permitAll();
 
 	}
 

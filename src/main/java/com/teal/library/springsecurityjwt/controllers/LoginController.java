@@ -1,6 +1,5 @@
 package com.teal.library.springsecurityjwt.controllers;
 import com.teal.library.springsecurityjwt.DataAccess;
-import com.teal.library.springsecurityjwt.HibernateORM;
 import com.teal.library.springsecurityjwt.LibraryRegistrationService;
 import com.teal.library.springsecurityjwt.LibraryUserDetailsService;
 import com.teal.library.springsecurityjwt.models.AuthenticationRequest;
@@ -21,11 +20,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.hibernate.Session;
-import org.hibernate.query.*;
-import org.springframework.web.client.HttpClientErrorException;
-
-import java.util.List;
 
 @RestController
 class LoginController {
@@ -36,13 +30,7 @@ class LoginController {
     private LibraryRegistrationService registrationService;
 
     @Autowired
-    private JwtUtil jwtTokenUtil;
-
-    @Autowired
-    private LibraryUserDetailsService userDetailsService;
-
-    @Autowired
-    private HibernateORM hibernate;
+    private DataAccess db;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
@@ -51,16 +39,14 @@ class LoginController {
         LOGGER.info("Received request from /hello endpoint");
         return "Hello World";
     }
-    @RequestMapping(value = "api/userinfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/userinfo", method = RequestMethod.GET)
     public ResponseEntity<?> currentUserName(Authentication authentication) {
-        DataAccess db = new DataAccess();
         ReaderEntity reader = db.GetUserInfo(authentication.getName());
         return ResponseEntity.ok(reader);
     }
     @RequestMapping(value = "/api/register", method = RequestMethod.POST)
     public ResponseEntity<?> RegisterUser(@RequestBody UserForm user){
         LOGGER.info("Received request from /register endpoint");
-        DataAccess db = new DataAccess();
         boolean flag = db.ExistsUser(user.getUsername());
         if(!flag) {
             try {
