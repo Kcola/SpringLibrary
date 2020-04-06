@@ -1,5 +1,6 @@
 import * as moment from "moment";
 import * as bootstrap from "bootstrap";
+import Alert = kendo.ui.Alert;
 let isbn  = "";
 interface BorrowInfo {
     username: string,
@@ -7,30 +8,37 @@ interface BorrowInfo {
     duration: string,
     readerid: number
 }
+
+let borrowinfo = {} as BorrowInfo;
+$("#borrow").on("click", async function(){
+    if(sessionStorage.username === $("#borrow-confirm").val()) {
+        borrowinfo.duration=$("#duration").val().toString();
+        borrowinfo.isbn = isbn;
+        borrowinfo.username = sessionStorage.getItem("username");
+        borrowinfo.readerid = JSON.parse(sessionStorage.userInfo).readerid;
+        const response = await fetch("/api/borrow", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+            },
+            body: JSON.stringify(borrowinfo)
+        });
+        if(response.status === 200){
+            alert("Transaction completed");
+            $('#borrow-modal').modal("hide");
+        }
+        else
+            alert("Error completing transaction");
+    }
+    else{
+        alert("Incorrect Username")
+    }
+});
 function borrowModal() {
     $('#borrow-modal').modal("show");
     $(".modal-title").html($(this).children('td[data-field="title"]').children("div").html());
     isbn = $(this).children('td[data-field="isbn"]').children("div").html();
-    let borrowinfo = {} as BorrowInfo;
-    borrowinfo.duration=$("#duration").val().toString();
-    borrowinfo.isbn = isbn;
-    borrowinfo.username = sessionStorage.getItem("username");
-    borrowinfo.readerid = JSON.parse(sessionStorage.userInfo).readerid;
-    $("#borrow").on("click", async function(){
-        debugger
-        if(sessionStorage.username === $("#borrow-confirm").val()) {
-            const response = await fetch("/api/borrow", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-                },
-                body: JSON.stringify(borrowinfo)
-            });
-            const flag = await response.json();
-            console.log(flag);
-        }
-    });
 }
 export let books  = {
     settings: {
@@ -74,6 +82,7 @@ export let books  = {
             pageSize: 20,
         }),
         dataBound:function () {
+            $("#all-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").off("click",borrowModal);
             $("#all-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").on("click",borrowModal);
         },
         scrollable: true,

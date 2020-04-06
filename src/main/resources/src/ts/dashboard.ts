@@ -1,4 +1,7 @@
 import {books} from './all-books-grid';
+import {validateRegistrationObject, validUserName} from "./functions";
+import {Reader} from "./interfaces";
+
 export function dashboard() {
     interface NewUser {
         username: string,
@@ -14,25 +17,7 @@ export function dashboard() {
         username: string,
         password: string
     }
-    interface Reader{
-        readerid : number,
-        email: string,
-        rtype: "admin"|"user",
-        firstname: string,
-        lastname: string,
-        address: string,
-        zipcode: string
-    }
-    function validUserName(s: string) {
-        return /^[a-z0-9]+$/i.test(s);
-    }
-    function validateRegistrationObject(obj: any) {
-        for (let key in obj) {
-            if (obj[key] === null || obj[key] === "")
-                return false;
-        }
-        return true;
-    }
+
     renderPage();
     document.getElementById("loginForm")
         .addEventListener("submit", async function (e) {

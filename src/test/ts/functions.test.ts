@@ -1,4 +1,6 @@
-import { validUserName, validateRegistrationObject, Reader } from "./dashboard";
+import { validUserName, validateRegistrationObject } from "../../main/resources/src/ts/functions";
+import {Reader} from "../../main/resources/src/ts/interfaces";
+
 test('Check if username only contains letters and/or numbers', () => {
     expect(validUserName('testUser')).toBe(true);
 });
