@@ -16,6 +16,7 @@ public class LibraryRegistrationService {
 //            throw new EmailExistsException(
 //                    "There is an account with that email address:" + user.getEmail());
 //        }
+
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         DataAccess db = new DataAccess();
             UsersEntity newUserModel = new UsersEntity();

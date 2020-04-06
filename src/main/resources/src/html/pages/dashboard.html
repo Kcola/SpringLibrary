@@ -175,21 +175,68 @@
       <div id="loggedInUser" class="sidebar-heading">User</div>
       <div class="list-group list-group-flush">
         <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Borrowed</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Reserved</a>
+        <a href="#borrow" class="list-group-item list-group-item-action bg-light">Borrow</a>
+        <a href="#reserve" class="list-group-item list-group-item-action bg-light">Reserve</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Schedule Appointment</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Subscription</a>
       </div>
     </div>
-    <!-- /#sidebar-wrapper -->
-
     <!-- Page Content -->
-
       <div class="container-fluid" style="height: 91.5vh;">
         <div class="card" style="width: 100%; height: 100%; margin-top: 12px;">
           <div class="card-body">
             <div id="grid"></div>
+            <div id="no-books" class="row hidden" style="height: 100%; width: 100%">
+              <div class="col col-auto ml-auto mr-auto my-auto">
+                <div class="row">
+                  <span>You have no borrowed or reserved books.</span>
+                </div>
+                <div class="row">
+                  <div class="col col-auto ml-auto mr-auto my-1">
+                    <button id="borrow-btn" class="btn btn-success" style="margin-right: 10px">Borrow</button>
+                    <button id="reserve-btn" class="btn btn-success" style="margin-left: 10px">Reserve</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="borrow-menu" class="row hidden">
+              <div class="col col-auto">
+                <div id="all-books-grid"></div>
+                <div id="borrow-modal" class="modal" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Borrow Book</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <form id="borrow-form" class="loginForm">
+                          <div class="form-group">
+                            <label for="borrow-duration">Duration</label>
+                            <div id="borrow-duration" class="form-group">
+                              <select name="" id="duration" class="form-control" placeholder="Pick Duration" style="margin-bottom: 10px">
+                                <option value="14d">2 weeks</option>
+                                <option value="1m">1 month</option>
+                                <option value="2m">2 months</option>
+                              </select>
+                              <label for="borrow-confirm">Confirm</label>
+                              <input id="borrow-confirm" type="username" class="form-control bg-light inputs" placeholder="Enter username to confirm">
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button id="borrow" type="button" class="btn btn-primary">Borrow</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
     </div>
@@ -197,7 +244,7 @@
 
   </div>
 </div>
-
+</div>
 <script src="app.js"></script>
 </body>
 

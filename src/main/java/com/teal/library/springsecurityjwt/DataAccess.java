@@ -1,5 +1,6 @@
 package com.teal.library.springsecurityjwt;
 import com.teal.library.springsecurityjwt.viewmodels.BookGrid;
+import com.teal.library.springsecurityjwt.viewmodels.BorrowForm;
 import com.teal.library.springsecurityjwt.viewmodels.UserForm;
 import org.hibernate.Session;
 import org.hibernate.query.*;
@@ -7,6 +8,7 @@ import com.teal.library.springsecurityjwt.models.*;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Book;
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -84,8 +86,8 @@ public class DataAccess {
     }
     public List<BookGrid> GetBooks() {
         Session session = HibernateORM.getSessionFactory().openSession();
-        Query query = session.createQuery("select doc.docid, doc.title, doc.pdate, pub.pubname, book.isbn, book.genre from BookEntity book," +
-                "DocumentEntity doc, PublisherEntity pub where doc.docid = book.docid and doc.publisherid = pub.publisherid");
+        Query query = session.createQuery("select distinct doc.docid, doc.title, doc.pdate, pub.pubname, book.isbn, book.genre from BookEntity book," +
+                "DocumentEntity doc, CopyEntity copy, PublisherEntity pub where doc.docid = book.docid and doc.publisherid = pub.publisherid and copy.docid = book.docid");
         List<Object[]> list = query.list();
         List<BookGrid> books = new ArrayList<BookGrid>();
         for(Object row[]: list){
@@ -93,5 +95,41 @@ public class DataAccess {
             books.add(entry);
         }
         return books;
+    }
+    public int BorrowBook(BorrowForm info){
+        Session session = HibernateORM.getSessionFactory().openSession();
+        Query query = session.createQuery("select docs.docid, copy.copyid, copy.libid  from CopyEntity copy, DocumentEntity docs, BookEntity books where copy.docid = docs.docid and docs.docid = books.docid and books.isbn = :isbn");
+        query.setParameter("isbn", info.getIsbn());
+        List<Object[]> list = query.list();
+        Object[] prop  = list.get(0);
+        Date today = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(today);
+        BorrowsEntity borrow = new BorrowsEntity();
+        borrow.setBtime(new java.sql.Date(today.getTime()));
+        borrow.setCopyid(prop[1].toString());
+        borrow.setDocid((Integer)prop[0]);
+        borrow.setFines(0);
+        borrow.setRtime(null);
+        borrow.setReaderid(info.getReaderid());
+        switch(info.getDuration()) {
+            case "14d":
+                c.add(Calendar.DATE, 14);
+                borrow.setDuedate(new java.sql.Date(c.getTime().getTime()));
+                break;
+            case "1m":
+                c.add(Calendar.MONTH, 1);
+                borrow.setDuedate(new java.sql.Date(c.getTime().getTime()));
+                break;
+            case "2m":
+                c.add(Calendar.MONTH, 2);
+                borrow.setDuedate(new java.sql.Date(c.getTime().getTime()));
+        }
+        borrow.setFines(0);
+        borrow.setLibid((Integer) prop[2]);
+        session.beginTransaction();
+        session.save(borrow);
+        session.getTransaction().commit();
+        return borrow.getBornumber();
     }
 }

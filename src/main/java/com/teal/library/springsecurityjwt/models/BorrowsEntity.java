@@ -14,8 +14,10 @@ public class BorrowsEntity {
     private Date btime;
     private Date rtime;
     private double fines;
+    private Date duedate;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bornumber")
     public int getBornumber() {
         return bornumber;
@@ -128,5 +130,15 @@ public class BorrowsEntity {
         temp = Double.doubleToLongBits(fines);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    @Basic
+    @Column(name = "duedate")
+    public Date getDuedate() {
+        return duedate;
+    }
+
+    public void setDuedate(Date duedate) {
+        this.duedate = duedate;
     }
 }

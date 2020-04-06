@@ -10,7 +10,7 @@ gulp.task('compile', function() {
     var tsconfig = require("./tsconfig.json");
     return gulp.src('src/main/resources/src/ts/*.ts')
         .pipe(ts(tsconfig.compilerOptions))
-        .pipe(gulp.dest('src/main/resources/src/js'));
+        .pipe(gulp.dest('src/main/resources/public'));
 });
 gulp.task("panini", function (done) {
   gulp
@@ -50,7 +50,7 @@ function reload(done) {
 function watch() {
   gulp
     .watch("src/main/resources/src/html/{layouts,partials,pages}/*.html")
-    .on("all", gulp.series(resetPages, "build", reload));
+    .on("all", gulp.series(resetPages, "panini", reload));
   gulp
     .watch("src/main/resources/src/css/*.css")
     .on("all", gulp.series(resetPages, "copy:css", reload));
