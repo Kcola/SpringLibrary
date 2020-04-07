@@ -56,7 +56,12 @@
       <groupId>org.springframework.security</groupId>  
       <artifactId>spring-security-test</artifactId>  
       <scope>test</scope> 
-    </dependency>  
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.4</version>
+    </dependency>
     <dependency> 
       <groupId>com.microsoft.azure</groupId>  
       <artifactId>azure-webapp-maven-plugin</artifactId>  
@@ -77,7 +82,7 @@
           <schemaVersion>V2</schemaVersion>  
           <resourceGroup>springapps</resourceGroup>  
           <appName>springlibrary</appName>  
-          <pricingTier>F1</pricingTier>  
+          <pricingTier>B1</pricingTier>
           <runtime> 
             <os>linux</os>
             <javaVersion>jre8</javaVersion>

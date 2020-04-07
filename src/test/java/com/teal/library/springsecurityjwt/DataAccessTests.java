@@ -8,13 +8,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringSecurityJwtApplicationTests {
+public class DataAccessTests {
 	@Autowired
 	private DataAccess db;
+
 	@Test
-	public void ExistsUserTest() {
-		assertTrue(db.ExistsUser("kola") == true);
-	}
+	public void ExistsUserTest() {assertTrue(db.ExistsUser("kola") == true);}
 	@Test
 	public void GetAllBooksTest() {
 		assertTrue(db.GetBooks().size() > 0);
