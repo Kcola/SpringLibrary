@@ -1,9 +1,8 @@
 package com.teal.library.springsecurityjwt.controllers;
 
 import com.teal.library.springsecurityjwt.DataAccess;
-import com.teal.library.springsecurityjwt.viewmodels.BookGrid;
-import com.teal.library.springsecurityjwt.viewmodels.BorrowForm;
-import com.teal.library.springsecurityjwt.viewmodels.UserForm;
+import com.teal.library.springsecurityjwt.models.BorrowsEntity;
+import com.teal.library.springsecurityjwt.viewmodels.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +29,8 @@ public class BooksController {
     }
 
     @RequestMapping(value = "/api/borrow", method = RequestMethod.POST)
-    public ResponseEntity<?> RegisterUser(@RequestBody BorrowForm user){
-        LOGGER.info("Received request from /register endpoint");
+    public ResponseEntity<?> BorrowBook(@RequestBody BorrowForm user){
+        LOGGER.info("Received request from /borrow endpoint");
         boolean flag = db.ExistsUser(user.getUsername());
         if(flag) {
             try {
@@ -45,5 +44,16 @@ public class BooksController {
             }
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @RequestMapping(value = "/api/borrowed", method = RequestMethod.POST)
+    public ResponseEntity<?> BorrowedBooks(@RequestBody ReaderID user){
+        LOGGER.info("Received request from /borrowed endpoint");
+        try{
+            List<BorrowGrid> success = db.Borrowed(user.getReaderID());
+            return ResponseEntity.ok(success);
+        }
+        catch (Exception ex){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

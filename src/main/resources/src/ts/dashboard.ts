@@ -1,6 +1,7 @@
-import {books} from './all-books-grid';
+import {bookCopies} from './book-copies-grid';
 import {validateRegistrationObject, validUserName} from "./functions";
 import {Reader} from "./interfaces";
+import {borrowedBooks} from "./borrowed-books-grid";
 
 export function dashboard() {
     interface NewUser {
@@ -132,12 +133,21 @@ export function dashboard() {
         }
         if(window.location.hash == "#borrow"){
             $("#all-books-grid").html("");
-            $("#all-books-grid").kendoGrid(books.settings);
+            $("#all-books-grid").kendoGrid(bookCopies.settings);
             $("#borrow-menu").removeClass("hidden");
         }
         else{
             $("#borrow-menu").addClass("hidden");
             $("#all-books-grid").html("");
+        }
+        if(window.location.hash == "#profile"){
+            $("#borrwed-books-grid").html("");
+            $("#borrwed-books-grid").kendoGrid(borrowedBooks.settings);
+            $("#profile-menu").removeClass("hidden");
+        }
+        else{
+            $("#profile-menu").addClass("hidden");
+            $("#borrwed-books-grid").html("");
         }
 
     }

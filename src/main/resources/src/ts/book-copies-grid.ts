@@ -1,6 +1,4 @@
 import * as moment from "moment";
-import * as bootstrap from "bootstrap";
-import Alert = kendo.ui.Alert;
 let isbn  = "";
 interface BorrowInfo {
     username: string,
@@ -40,7 +38,7 @@ function borrowModal() {
     $(".modal-title").html($(this).children('td[data-field="title"]').children("div").html());
     isbn = $(this).children('td[data-field="isbn"]').children("div").html();
 }
-export let books  = {
+export let bookCopies  = {
     settings: {
         excel:{
             fileName: "BookExport.xlsx",

@@ -15,6 +15,7 @@ public class BorrowsEntity {
     private Date rtime;
     private double fines;
     private Date duedate;
+    private String position;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -140,5 +141,15 @@ public class BorrowsEntity {
 
     public void setDuedate(Date duedate) {
         this.duedate = duedate;
+    }
+
+    @Basic
+    @Column(name = "position")
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 }

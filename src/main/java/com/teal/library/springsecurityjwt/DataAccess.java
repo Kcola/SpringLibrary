@@ -1,6 +1,7 @@
 package com.teal.library.springsecurityjwt;
 import com.teal.library.springsecurityjwt.viewmodels.BookGrid;
 import com.teal.library.springsecurityjwt.viewmodels.BorrowForm;
+import com.teal.library.springsecurityjwt.viewmodels.BorrowGrid;
 import com.teal.library.springsecurityjwt.viewmodels.UserForm;
 import org.hibernate.Session;
 import org.hibernate.query.*;
@@ -98,7 +99,7 @@ public class DataAccess {
     }
     public int BorrowBook(BorrowForm info){
         Session session = HibernateORM.getSessionFactory().openSession();
-        Query query = session.createQuery("select docs.docid, copy.copyid, copy.libid  from CopyEntity copy, DocumentEntity docs, BookEntity books where copy.docid = docs.docid and docs.docid = books.docid and books.isbn = :isbn");
+        Query query = session.createQuery("select docs.docid, copy.copyid, copy.libid, copy.position  from CopyEntity copy, DocumentEntity docs, BookEntity books where copy.docid = docs.docid and docs.docid = books.docid and books.isbn = :isbn");
         query.setParameter("isbn", info.getIsbn());
         List<Object[]> list = query.list();
         Object[] prop  = list.get(0);
@@ -127,9 +128,27 @@ public class DataAccess {
         }
         borrow.setFines(0);
         borrow.setLibid((Integer) prop[2]);
+        borrow.setPosition(prop[3].toString());
         session.beginTransaction();
         session.save(borrow);
         session.getTransaction().commit();
         return borrow.getBornumber();
+    }
+    public List<BorrowGrid> Borrowed(int readerID){
+        Session session = HibernateORM.getSessionFactory().openSession();
+        Query query = session.createQuery("Select borrow.bornumber, docs.title, borrow.btime, borrow.rtime, borrow.fines, borrow.duedate from BorrowsEntity borrow, DocumentEntity docs where readerid = :readerID and docs.docid = borrow.docid");
+        query.setParameter("readerID", readerID);
+        List<Object[]> borrowed = query.list();
+        List<BorrowGrid> borrowedGrid = new ArrayList<BorrowGrid>();
+        for(Object[] entry : borrowed){
+            BorrowGrid data = new BorrowGrid();
+            data.setBornumber((Integer)entry[0]);
+            data.setTitle(entry[1].toString());
+            data.setBtime((java.sql.Date)entry[2]);
+            data.setFines(0.0);
+            data.setDuedate((java.sql.Date)entry[5]);
+            borrowedGrid.add(data);
+        }
+        return borrowedGrid;
     }
 }
