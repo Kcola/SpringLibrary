@@ -4,6 +4,7 @@ import com.teal.library.springsecurityjwt.viewmodels.BorrowForm;
 import com.teal.library.springsecurityjwt.viewmodels.BorrowGrid;
 import com.teal.library.springsecurityjwt.viewmodels.UserForm;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.*;
 import com.teal.library.springsecurityjwt.models.*;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class DataAccess {
             userModel.setReaderid(readerid);
             session.save(userModel);
             session.getTransaction().commit();
+            session.close();
             return 1;
         }
         catch (Exception e){
@@ -42,6 +44,7 @@ public class DataAccess {
             session.beginTransaction();
             session.save(newReaderModel);
             session.getTransaction().commit();
+            session.close();
             return newReaderModel.getReaderid();
         }
         catch (Exception e){
@@ -54,6 +57,7 @@ public class DataAccess {
         Query query = session.createQuery("from UsersEntity where username = :username");
         query.setParameter("username", username);
         List<UsersEntity> list = query.list();
+        session.close();
         if(list.size() == 0)
             return false;
         else
@@ -65,6 +69,7 @@ public class DataAccess {
         query.setParameter("username", username);
         List<UsersEntity> list = query.list();
         UsersEntity userModel = list.get(0);
+        session.close();
         return userModel;
     }
 
@@ -83,6 +88,7 @@ public class DataAccess {
         reader.setZipcode(prop[4].toString());
         reader.setFirstname(prop[5].toString());
         reader.setLastname(prop[6].toString());
+        session.close();
         return reader;
     }
     public List<BookGrid> GetBooks() {
@@ -90,6 +96,7 @@ public class DataAccess {
         Query query = session.createQuery("select distinct doc.docid, doc.title, doc.pdate, pub.pubname, book.isbn, book.genre from BookEntity book," +
                 "DocumentEntity doc, CopyEntity copy, PublisherEntity pub where doc.docid = book.docid and doc.publisherid = pub.publisherid and copy.docid = book.docid");
         List<Object[]> list = query.list();
+        session.close();
         List<BookGrid> books = new ArrayList<BookGrid>();
         for(Object row[]: list){
             BookGrid entry = new BookGrid((Integer)row[0], row[1].toString(), row[2].toString(), row[3].toString(),row[4].toString(), row[5].toString());
@@ -132,11 +139,12 @@ public class DataAccess {
         session.beginTransaction();
         session.save(borrow);
         session.getTransaction().commit();
+        session.close();
         return borrow.getBornumber();
     }
     public List<BorrowGrid> Borrowed(int readerID){
         Session session = HibernateORM.getSessionFactory().openSession();
-        Query query = session.createQuery("Select borrow.bornumber, docs.title, borrow.btime, borrow.rtime, borrow.fines, borrow.duedate from BorrowsEntity borrow, DocumentEntity docs where readerid = :readerID and docs.docid = borrow.docid");
+        Query query = session.createQuery("Select borrow.bornumber, docs.title, borrow.btime, borrow.rtime, borrow.fines, borrow.duedate from BorrowsEntity borrow, DocumentEntity docs where readerid = :readerID and docs.docid = borrow.docid and borrow.rtime = null");
         query.setParameter("readerID", readerID);
         List<Object[]> borrowed = query.list();
         List<BorrowGrid> borrowedGrid = new ArrayList<BorrowGrid>();
@@ -149,6 +157,19 @@ public class DataAccess {
             data.setDuedate((java.sql.Date)entry[5]);
             borrowedGrid.add(data);
         }
+        session.close();
         return borrowedGrid;
+    }
+    public void Return(int bornumber){
+        Session session = HibernateORM.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        BorrowsEntity transaction = session.load(BorrowsEntity.class, bornumber);
+        Date today = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(today);
+        transaction.setRtime(new java.sql.Date(c.getTime().getTime()));
+        session.update(transaction);
+        tx.commit();
+        session.close();
     }
 }

@@ -41,7 +41,7 @@ export function dashboard() {
             if(response.status === 200){
                 sessionStorage.setItem("username", username)
                 sessionStorage.setItem('token', token.jwt);
-                window.location.hash = "dashboard"
+                window.location.hash = "profile"
             }
             else{
                 alert("Invalid Credentials")
@@ -141,13 +141,13 @@ export function dashboard() {
             $("#all-books-grid").html("");
         }
         if(window.location.hash == "#profile"){
-            $("#borrwed-books-grid").html("");
-            $("#borrwed-books-grid").kendoGrid(borrowedBooks.settings);
+            $("#borrowed-books-grid").html("");
+            $("#borrowed-books-grid").kendoGrid(borrowedBooks.settings);
             $("#profile-menu").removeClass("hidden");
         }
         else{
             $("#profile-menu").addClass("hidden");
-            $("#borrwed-books-grid").html("");
+            $("#borrowed-books-grid").html("");
         }
 
     }

@@ -36,7 +36,7 @@ public class BooksController {
             try {
                 int success = db.BorrowBook(user);
                 if(success > 0)
-                    return ResponseEntity.ok("");
+                    return ResponseEntity.ok(success);
                 else
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             } catch (Exception e) {
@@ -51,6 +51,18 @@ public class BooksController {
         try{
             List<BorrowGrid> success = db.Borrowed(user.getReaderID());
             return ResponseEntity.ok(success);
+        }
+        catch (Exception ex){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    @RequestMapping(value = "/api/return", method = RequestMethod.POST)
+    public ResponseEntity<?> ReturnBook(@RequestBody BorNumber book){
+        LOGGER.info("Received request from /borrowed endpoint");
+        try{
+            db.Return(book.getBornumber());
+                return ResponseEntity.ok("Updated");
+
         }
         catch (Exception ex){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

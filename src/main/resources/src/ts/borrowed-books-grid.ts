@@ -1,7 +1,27 @@
 import * as moment from "moment";
-import {Reader} from "./interfaces";
-
-const reader = JSON.parse(sessionStorage.userInfo) as Reader;
+import {calculateFine} from "./functions";
+let bornumber: number;
+function returnModal() {
+    $("#return-modal").modal("show");
+    $(".modal-title").html($(this).children('td[data-field="title"]').children("div").html());
+    bornumber= parseInt($(this).children('td[data-field="bornumber"]').children("div").html());
+}
+$("#return").on("click", async function(){
+    const response = await fetch("/api/return", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+        },
+        body: JSON.stringify({bornumber: bornumber})
+    });
+    if(response.status === 200){
+        alert("Book Returned");
+        $('#borrow-modal').modal("hide");
+    }
+    else
+        alert("Error completing transaction");
+});
 export let borrowedBooks = {
     settings: {
         excel: {
@@ -24,7 +44,7 @@ export let borrowedBooks = {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                         },
-                        body: JSON.stringify({readerID: reader.readerid})
+                        body: JSON.stringify({readerID: JSON.parse(sessionStorage.userInfo).readerid})
                     });
                     const borrowed = await response.json();
                     options.success(borrowed);
@@ -44,10 +64,10 @@ export let borrowedBooks = {
             },
             pageSize: 20,
         }),
-        // dataBound: function () {
-        //     $("#all-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").off("click", borrowModal);
-        //     $("#all-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").on("click", borrowModal);
-        // },
+        dataBound:function () {
+            $("#borrowed-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").off("click",returnModal);
+            $("#borrowed-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").on("click",returnModal);
+        },
         scrollable: true,
         sortable: true,
         pageable: true,
@@ -56,7 +76,7 @@ export let borrowedBooks = {
             {
                 field: "bornumber",
                 title: "Borrow Number",
-                width: "100px",
+                width: "50px",
                 filterable: false,
                 template: function (dataRow: { bornumber: string; }) {
                     return `<div class = "cut-text" ">${dataRow.bornumber}</div>`;
@@ -114,8 +134,8 @@ export let borrowedBooks = {
                 title: "Fines",
                 width: "63px",
                 filterable: false,
-                template: function (dataRow: { fines: number; }) {
-                    return `<div class = "cut-text" >$${dataRow.fines}</div>`;
+                template: function (dataRow: { duedate: Date; }) {
+                    return `<div class = "cut-text" >$${calculateFine(dataRow.duedate) > 0 ? calculateFine(dataRow.duedate) : 0}</div>`;
                 },
                 headerTemplate: '<div style="font-weight: bold; color: black; ">Fines</div>'
             },
