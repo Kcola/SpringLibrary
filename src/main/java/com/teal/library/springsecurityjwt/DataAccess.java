@@ -1,23 +1,27 @@
 package com.teal.library.springsecurityjwt;
+
+import com.teal.library.springsecurityjwt.models.BorrowsEntity;
+import com.teal.library.springsecurityjwt.models.ReaderEntity;
+import com.teal.library.springsecurityjwt.models.UsersEntity;
 import com.teal.library.springsecurityjwt.viewmodels.BookGrid;
 import com.teal.library.springsecurityjwt.viewmodels.BorrowForm;
 import com.teal.library.springsecurityjwt.viewmodels.BorrowGrid;
 import com.teal.library.springsecurityjwt.viewmodels.UserForm;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.*;
-import com.teal.library.springsecurityjwt.models.*;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Book;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class DataAccess {
 
-    public int AddUser(UsersEntity userModel, int readerid){
-        try{
+    public int AddUser(UsersEntity userModel, int readerid) {
+        try {
             Session session = HibernateORM.getSessionFactory().openSession();
             session.beginTransaction();
             userModel.setReaderid(readerid);
@@ -25,14 +29,14 @@ public class DataAccess {
             session.getTransaction().commit();
             session.close();
             return 1;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return -1;
         }
     }
-    public int AddReader(UserForm user){
-        try{
+
+    public int AddReader(UserForm user) {
+        try {
             ReaderEntity newReaderModel = new ReaderEntity();
             newReaderModel.setFirstname(user.getFirstname());
             newReaderModel.setLastname(user.getLastname());
@@ -46,24 +50,25 @@ public class DataAccess {
             session.getTransaction().commit();
             session.close();
             return newReaderModel.getReaderid();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return -1;
         }
     }
-    public boolean ExistsUser(String username){
+
+    public boolean ExistsUser(String username) {
         Session session = HibernateORM.getSessionFactory().openSession();
         Query query = session.createQuery("from UsersEntity where username = :username");
         query.setParameter("username", username);
         List<UsersEntity> list = query.list();
         session.close();
-        if(list.size() == 0)
+        if (list.size() == 0)
             return false;
         else
             return true;
     }
-    public UsersEntity ValidateUser(String username){
+
+    public UsersEntity ValidateUser(String username) {
         Session session = HibernateORM.getSessionFactory().openSession();
         Query query = session.createQuery("from UsersEntity where username = :username");
         query.setParameter("username", username);
@@ -79,9 +84,9 @@ public class DataAccess {
                 "UsersEntity user where user.readerid = reader.readerid and user.username = :username");
         query.setParameter("username", username);
         List<Object[]> list = query.list();
-        Object[] prop  = list.get(0);
+        Object[] prop = list.get(0);
         ReaderEntity reader = new ReaderEntity();
-        reader.setReaderid((Integer)prop[0]);
+        reader.setReaderid((Integer) prop[0]);
         reader.setAddress(prop[1].toString());
         reader.setEmail(prop[2].toString());
         reader.setRtype(prop[3].toString());
@@ -91,6 +96,7 @@ public class DataAccess {
         session.close();
         return reader;
     }
+
     public List<BookGrid> GetBooks() {
         Session session = HibernateORM.getSessionFactory().openSession();
         Query query = session.createQuery("select distinct doc.docid, doc.title, doc.pdate, pub.pubname, book.isbn, book.genre from BookEntity book," +
@@ -98,29 +104,30 @@ public class DataAccess {
         List<Object[]> list = query.list();
         session.close();
         List<BookGrid> books = new ArrayList<BookGrid>();
-        for(Object row[]: list){
-            BookGrid entry = new BookGrid((Integer)row[0], row[1].toString(), row[2].toString(), row[3].toString(),row[4].toString(), row[5].toString());
+        for (Object row[] : list) {
+            BookGrid entry = new BookGrid((Integer) row[0], row[1].toString(), row[2].toString(), row[3].toString(), row[4].toString(), row[5].toString());
             books.add(entry);
         }
         return books;
     }
-    public int BorrowBook(BorrowForm info){
+
+    public int BorrowBook(BorrowForm info) {
         Session session = HibernateORM.getSessionFactory().openSession();
         Query query = session.createQuery("select docs.docid, copy.copyid, copy.libid, copy.position  from CopyEntity copy, DocumentEntity docs, BookEntity books where copy.docid = docs.docid and docs.docid = books.docid and books.isbn = :isbn");
         query.setParameter("isbn", info.getIsbn());
         List<Object[]> list = query.list();
-        Object[] prop  = list.get(0);
+        Object[] prop = list.get(0);
         Date today = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(today);
         BorrowsEntity borrow = new BorrowsEntity();
         borrow.setBtime(new java.sql.Date(today.getTime()));
         borrow.setCopyid(prop[1].toString());
-        borrow.setDocid((Integer)prop[0]);
+        borrow.setDocid((Integer) prop[0]);
         borrow.setFines(0);
         borrow.setRtime(null);
         borrow.setReaderid(info.getReaderid());
-        switch(info.getDuration()) {
+        switch (info.getDuration()) {
             case "14d":
                 c.add(Calendar.DATE, 14);
                 borrow.setDuedate(new java.sql.Date(c.getTime().getTime()));
@@ -142,34 +149,43 @@ public class DataAccess {
         session.close();
         return borrow.getBornumber();
     }
-    public List<BorrowGrid> Borrowed(int readerID){
+
+    public List<BorrowGrid> Borrowed(int readerID) {
         Session session = HibernateORM.getSessionFactory().openSession();
-        Query query = session.createQuery("Select borrow.bornumber, docs.title, borrow.btime, borrow.rtime, borrow.fines, borrow.duedate from BorrowsEntity borrow, DocumentEntity docs where readerid = :readerID and docs.docid = borrow.docid and borrow.rtime = null");
+        Query query = session.createQuery("Select borrow.bornumber, docs.title, borrow.btime, borrow.rtime, borrow.fines, borrow.duedate from BorrowsEntity borrow, DocumentEntity docs where readerid = :readerID and docs.docid = borrow.docid");
         query.setParameter("readerID", readerID);
         List<Object[]> borrowed = query.list();
         List<BorrowGrid> borrowedGrid = new ArrayList<BorrowGrid>();
-        for(Object[] entry : borrowed){
+        for (Object[] entry : borrowed) {
             BorrowGrid data = new BorrowGrid();
-            data.setBornumber((Integer)entry[0]);
+            data.setBornumber((Integer) entry[0]);
             data.setTitle(entry[1].toString());
-            data.setBtime((java.sql.Date)entry[2]);
+            data.setBtime((java.sql.Date) entry[2]);
+            data.setRtime((java.sql.Date) entry[3]);
             data.setFines(0.0);
-            data.setDuedate((java.sql.Date)entry[5]);
+            data.setDuedate((java.sql.Date) entry[5]);
             borrowedGrid.add(data);
         }
         session.close();
         return borrowedGrid;
     }
-    public void Return(int bornumber){
-        Session session = HibernateORM.getSessionFactory().openSession();
-        Transaction tx = session.beginTransaction();
-        BorrowsEntity transaction = session.load(BorrowsEntity.class, bornumber);
-        Date today = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(today);
-        transaction.setRtime(new java.sql.Date(c.getTime().getTime()));
-        session.update(transaction);
-        tx.commit();
-        session.close();
+
+    public int Return(int bornumber) {
+        try {
+            Session session = HibernateORM.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            BorrowsEntity transaction = session.load(BorrowsEntity.class, bornumber);
+            Date today = new Date();
+            Calendar c = Calendar.getInstance();
+            c.setTime(today);
+            transaction.setRtime(new java.sql.Date(c.getTime().getTime()));
+            session.update(transaction);
+            tx.commit();
+            session.close();
+            return 1;
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return -1;
+        }
     }
 }

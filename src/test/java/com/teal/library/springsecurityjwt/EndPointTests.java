@@ -52,7 +52,7 @@ public class EndPointTests {
     }
 
     @Test
-    public void CurrentUserTest() throws IOException { //SYSTEM TEST 2
+    public void CurrentUserTest() throws IOException { //SYSTEM TEST 3
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost postLogin = new HttpPost("http://localhost:8080/api/authenticate");
         String jsonLogin = "{\"username\":\"bot\",\"password\":\"test123\"}";
@@ -83,7 +83,7 @@ public class EndPointTests {
     }
 
     @Test
-    public void BorrowTest() throws IOException { //SYSTEM TEST 3
+    public void BorrowTest() throws IOException { //SYSTEM TEST 4
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost postLogin = new HttpPost("http://localhost:8080/api/authenticate");
         String jsonLogin = "{\"username\":\"bot\",\"password\":\"test123\"}";

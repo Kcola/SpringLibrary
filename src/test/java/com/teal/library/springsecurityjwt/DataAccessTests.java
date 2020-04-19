@@ -1,5 +1,6 @@
 package com.teal.library.springsecurityjwt;
 
+import com.teal.library.springsecurityjwt.models.BorrowsEntity;
 import com.teal.library.springsecurityjwt.models.UsersEntity;
 import com.teal.library.springsecurityjwt.viewmodels.UserForm;
 import org.hibernate.Session;
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 import java.util.Random;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
@@ -24,17 +26,32 @@ public class DataAccessTests {
     @Test
     public void ExistsUserTest() {
         assertTrue(db.ExistsUser("kola") == true);
-    } // UNIT TEST 4
+    } // UNIT TEST 6
 
     @Test
-    public void GetAllBooksTest() {
+    public void ValidateUser() {
+        assertTrue(db.ValidateUser("bot").getReaderid() == 8);
+    }// UNIT TEST 7
+
+    @Test
+    public void GetAvailableCopies() {
         assertTrue(db.GetBooks().size() > 0);
-    }//UNIT TEST 6
+    }//UNIT TEST 8
 
     @Test
-    public void GetUserInfoTest() {//UNIT TEST 7
+    public void GetUserInfoTest() {
         assertTrue(db.GetUserInfo("bot").getFirstname().equals("Test"));
-    }
+    }//UNIT TEST 9
+
+    @Test
+    public void ReturnBookTest() {
+        Session session = HibernateORM.getSessionFactory().openSession();
+        Query query = session.createQuery("from BorrowsEntity where readerid = 8 and rtime = null");
+        List<BorrowsEntity> list = query.list();
+        Random rand = new Random();
+        int randomBook = list.get(rand.nextInt(list.size())).getBornumber();
+        assertEquals(1, db.Return(randomBook));
+    }//UNIT TEST 10
 
     @Test
     public void DuplicateEmailTest() { //INTEGRATION TEST 3

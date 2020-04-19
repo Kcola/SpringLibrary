@@ -1,24 +1,9 @@
 import {bookCopies} from './book-copies-grid';
-import {validateRegistrationObject, validUserName, inputConfirmed} from "./functions";
-import {Reader} from "./interfaces";
+import {inputConfirmed, validateRegistrationObject, validUserName} from "./functions";
+import {NewUser, Reader, ReturningUser} from "./interfaces";
 import {borrowedBooks} from "./borrowed-books-grid";
 
 export function dashboard() {
-    interface NewUser {
-        username: string,
-        password: string,
-        firstname: string,
-        lastname: string,
-        email: string,
-        zipcode: string,
-        address: string,
-        type: "user"|"admin",
-    }
-    interface ReturningUser {
-        username: string,
-        password: string
-    }
-
     renderPage();
     document.getElementById("loginForm")
         .addEventListener("submit", async function (e) {
@@ -26,7 +11,7 @@ export function dashboard() {
             let inputPassword = document.getElementById("password")! as HTMLInputElement;
             let username = inputUsername.value.toLocaleLowerCase();
             let password = inputPassword.value;
-            let credentials = { username: username, password: password } as ReturningUser;
+            let credentials = {username: username, password: password} as ReturningUser;
             e.preventDefault();
             e.stopPropagation();
             const url = "/api/authenticate";
@@ -38,29 +23,28 @@ export function dashboard() {
                 body: JSON.stringify(credentials)
             });
             const token = await response.json();
-            if(response.status === 200){
+            if (response.status === 200) {
                 sessionStorage.setItem("username", username)
                 sessionStorage.setItem('token', token.jwt);
                 window.location.hash = "profile"
-            }
-            else{
+            } else {
                 alert("Invalid Credentials")
             }
-    });
+        });
     document.getElementById("registerForm")
-        .addEventListener("submit", async function (e){
+        .addEventListener("submit", async function (e) {
             e.preventDefault();
             e.stopPropagation();
             let register = {} as NewUser;
             let inputPassword = document.getElementById("registerPassword")! as HTMLInputElement;
             let inputConfirmPassword = document.getElementById("registerConfirmPassword")! as HTMLInputElement;
-            if(!inputConfirmed(inputConfirmPassword.value,inputPassword.value)){
+            if (!inputConfirmed(inputConfirmPassword.value, inputPassword.value)) {
                 alert("Password doesnt match");
                 return;
             }
 
             let inputUsername = document.getElementById("registerUsername")! as HTMLInputElement;
-            if(!validUserName(inputUsername.value)){
+            if (!validUserName(inputUsername.value)) {
                 alert("Username can only contain letters and/or numbers");
                 return;
             }
@@ -79,7 +63,7 @@ export function dashboard() {
             register.zipcode = inputZipcode.value;
             register.address = `${streetAddress.value}, ${inputCity.value}, ${pickState.value}${register.zipcode}`;
             register.type = "admin";
-            if(validateRegistrationObject(register)){
+            if (validateRegistrationObject(register)) {
                 const url = "/api/register";
                 const response = await fetch(url, {
                     method: 'POST',
@@ -88,33 +72,33 @@ export function dashboard() {
                     },
                     body: JSON.stringify(register)
                 });
-                if(response.status ==200)
+                if (response.status == 200)
                     alert("You can now sign in");
                 else
                     alert("Username already exists");
-            }
-            else{
+            } else {
                 alert("Fill out all registration fields");
             }
 
         });
 
-    function renderPage(){
+    function renderPage() {
         let isAuthenticated = typeof sessionStorage.getItem('token') === "string";
         renderLogin(isAuthenticated);
     }
-    function renderLogin(isAuthenticated: boolean){
-        if(isAuthenticated){
+
+    function renderLogin(isAuthenticated: boolean) {
+        if (isAuthenticated) {
             document.getElementById("login").classList.add("hidden");
             renderDashboard();
-        }
-        else{
+        } else {
             window.location.hash = "login"
             document.getElementById("login").classList.remove("hidden");
             document.getElementById("dashboard").classList.add("hidden");
         }
     }
-    async function renderDashboard(){
+
+    async function renderDashboard() {
         document.getElementById("dashboard").classList.remove("hidden");
         const url = "/api/userinfo"
         const response = await fetch(url, {
@@ -124,28 +108,25 @@ export function dashboard() {
             }
         });
         const reader = await response.json() as Reader;
-        if(response.status === 200){
+        if (response.status === 200) {
             sessionStorage.userInfo = JSON.stringify(reader);
             document.getElementById("loggedInUser").textContent = `${reader.firstname} ${reader.lastname}`;
-        }
-        else{
+        } else {
             alert("Error retrieving user info")
         }
-        if(window.location.hash == "#borrow"){
+        if (window.location.hash == "#borrow") {
             $("#all-books-grid").html("");
             $("#all-books-grid").kendoGrid(bookCopies.settings);
             $("#borrow-menu").removeClass("hidden");
-        }
-        else{
+        } else {
             $("#borrow-menu").addClass("hidden");
             $("#all-books-grid").html("");
         }
-        if(window.location.hash == "#profile"){
+        if (window.location.hash == "#profile") {
             $("#borrowed-books-grid").html("");
             $("#borrowed-books-grid").kendoGrid(borrowedBooks.settings);
             $("#profile-menu").removeClass("hidden");
-        }
-        else{
+        } else {
             $("#profile-menu").addClass("hidden");
             $("#borrowed-books-grid").html("");
         }
