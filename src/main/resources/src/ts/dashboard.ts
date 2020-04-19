@@ -1,5 +1,5 @@
 import {bookCopies} from './book-copies-grid';
-import {validateRegistrationObject, validUserName} from "./functions";
+import {validateRegistrationObject, validUserName, inputConfirmed} from "./functions";
 import {Reader} from "./interfaces";
 import {borrowedBooks} from "./borrowed-books-grid";
 
@@ -54,7 +54,7 @@ export function dashboard() {
             let register = {} as NewUser;
             let inputPassword = document.getElementById("registerPassword")! as HTMLInputElement;
             let inputConfirmPassword = document.getElementById("registerConfirmPassword")! as HTMLInputElement;
-            if(inputConfirmPassword.value !== inputPassword.value){
+            if(!inputConfirmed(inputConfirmPassword.value,inputPassword.value)){
                 alert("Password doesnt match");
                 return;
             }

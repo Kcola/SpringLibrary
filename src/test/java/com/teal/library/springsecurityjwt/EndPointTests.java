@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.teal.library.springsecurityjwt.models.AuthenticationResponse;
 import com.teal.library.springsecurityjwt.models.BorrowsEntity;
 import com.teal.library.springsecurityjwt.models.ReaderEntity;
-import com.teal.library.springsecurityjwt.models.UsersEntity;
 import com.teal.library.springsecurityjwt.viewmodels.BorNumber;
 import com.teal.library.springsecurityjwt.viewmodels.BorrowForm;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -28,14 +27,15 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class EndPointTests {
 
     @Test
-    public void AuthtenticateTest() throws IOException {
+    public void AuthtenticateTest() throws IOException { //INTEGRATION TEST 2
         HttpClient client = HttpClientBuilder.create().build();
         Random rand = new Random();
         String generatedUsername = RandomStringUtils.randomAlphabetic(rand.nextInt(1000));
@@ -52,7 +52,7 @@ public class EndPointTests {
     }
 
     @Test
-    public void CurrentUserTest() throws IOException {
+    public void CurrentUserTest() throws IOException { //SYSTEM TEST 2
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost postLogin = new HttpPost("http://localhost:8080/api/authenticate");
         String jsonLogin = "{\"username\":\"bot\",\"password\":\"test123\"}";
@@ -81,8 +81,9 @@ public class EndPointTests {
         ReaderEntity userDetailsObj = gson.fromJson(responseBody, ReaderEntity.class);
         assertEquals(8, userDetailsObj.getReaderid());
     }
+
     @Test
-    public void BorrowTest() throws IOException {
+    public void BorrowTest() throws IOException { //SYSTEM TEST 3
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost postLogin = new HttpPost("http://localhost:8080/api/authenticate");
         String jsonLogin = "{\"username\":\"bot\",\"password\":\"test123\"}";
@@ -116,7 +117,7 @@ public class EndPointTests {
             responseBody = EntityUtils.toString(borrowResponseEntity);
         }
         int borNumber = Integer.parseInt(responseBody);
-        if(borNumber>0){
+        if (borNumber > 0) {
             HttpPost postReturn = new HttpPost("http://localhost:8080/api/return");
             postReturn.setHeader("Accept", "application/json");
             postReturn.setHeader("Content-type", "application/json");

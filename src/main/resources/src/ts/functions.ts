@@ -16,3 +16,7 @@ export function calculateFine(borrowDate: Date): number {
     let fine = today.diff(moment(borrowDate), 'days') * 0.20;
     return fine;
 }
+
+export function inputConfirmed(input1 :string, input2: string): boolean{
+    return input1===input2;
+}
