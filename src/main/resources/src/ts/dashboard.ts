@@ -2,6 +2,7 @@ import {bookCopies} from './book-copies-grid';
 import {inputConfirmed, validateRegistrationObject, validUserName} from "./functions";
 import {NewUser, Reader, ReturningUser} from "./interfaces";
 import {borrowedBooks} from "./borrowed-books-grid";
+import {history} from "./transaction-history-grid";
 
 export function dashboard() {
     renderPage();
@@ -86,6 +87,28 @@ export function dashboard() {
         let isAuthenticated = typeof sessionStorage.getItem('token') === "string";
         renderLogin(isAuthenticated);
     }
+
+    document.getElementById("profile-nav")
+        .addEventListener("click", async function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $("#borrowed-books-grid").html("");
+            $("#borrowed-books-grid").kendoGrid(borrowedBooks.settings);
+        });
+    document.getElementById("reserved-nav")
+        .addEventListener("click", async function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $("#borrowed-books-grid").html("");
+            $("#borrowed-books-grid").kendoGrid(borrowedBooks.settings);
+        });
+    document.getElementById("history-nav")
+        .addEventListener("click", async function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $("#borrowed-books-grid").html("");
+            $("#borrowed-books-grid").kendoGrid(history.settings);
+        });
 
     function renderLogin(isAuthenticated: boolean) {
         if (isAuthenticated) {

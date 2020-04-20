@@ -54,7 +54,7 @@ public class DataAccessTests {
     }//UNIT TEST 10
 
     @Test
-    public void DuplicateEmailTest() { //INTEGRATION TEST 3
+    public void DuplicateEmailTest() { //INTEGRATION TEST 4
         Session session = HibernateORM.getSessionFactory().openSession();
         Query query = session.createQuery("from UsersEntity");
         List<UsersEntity> list = query.list();

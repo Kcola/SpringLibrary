@@ -152,6 +152,26 @@ public class DataAccess {
 
     public List<BorrowGrid> Borrowed(int readerID) {
         Session session = HibernateORM.getSessionFactory().openSession();
+        Query query = session.createQuery("Select borrow.bornumber, docs.title, borrow.btime, borrow.rtime, borrow.fines, borrow.duedate from BorrowsEntity borrow, DocumentEntity docs where readerid = :readerID and docs.docid = borrow.docid and borrow.rtime=null");
+        query.setParameter("readerID", readerID);
+        List<Object[]> borrowed = query.list();
+        List<BorrowGrid> borrowedGrid = new ArrayList<BorrowGrid>();
+        for (Object[] entry : borrowed) {
+            BorrowGrid data = new BorrowGrid();
+            data.setBornumber((Integer) entry[0]);
+            data.setTitle(entry[1].toString());
+            data.setBtime((java.sql.Date) entry[2]);
+            data.setRtime((java.sql.Date) entry[3]);
+            data.setFines(0.0);
+            data.setDuedate((java.sql.Date) entry[5]);
+            borrowedGrid.add(data);
+        }
+        session.close();
+        return borrowedGrid;
+    }
+
+    public List<BorrowGrid> History(int readerID) {
+        Session session = HibernateORM.getSessionFactory().openSession();
         Query query = session.createQuery("Select borrow.bornumber, docs.title, borrow.btime, borrow.rtime, borrow.fines, borrow.duedate from BorrowsEntity borrow, DocumentEntity docs where readerid = :readerID and docs.docid = borrow.docid");
         query.setParameter("readerID", readerID);
         List<Object[]> borrowed = query.list();

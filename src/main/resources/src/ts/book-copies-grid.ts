@@ -1,5 +1,7 @@
 import * as moment from "moment";
-let isbn  = "";
+
+let isbn = "";
+
 interface BorrowInfo {
     username: string,
     isbn: string,
@@ -8,9 +10,9 @@ interface BorrowInfo {
 }
 
 let borrowinfo = {} as BorrowInfo;
-$("#borrow").on("click", async function(){
-    if(sessionStorage.username === $("#borrow-confirm").val()) {
-        borrowinfo.duration=$("#duration").val().toString();
+$("#borrow").on("click", async function () {
+    if (sessionStorage.username === $("#borrow-confirm").val()) {
+        borrowinfo.duration = $("#duration").val().toString();
         borrowinfo.isbn = isbn;
         borrowinfo.username = sessionStorage.getItem("username");
         borrowinfo.readerid = JSON.parse(sessionStorage.userInfo).readerid;
@@ -22,25 +24,25 @@ $("#borrow").on("click", async function(){
             },
             body: JSON.stringify(borrowinfo)
         });
-        if(response.status === 200){
+        if (response.status === 200) {
             alert("Transaction completed");
             $('#borrow-modal').modal("hide");
-        }
-        else
+        } else
             alert("Error completing transaction");
-    }
-    else{
+    } else {
         alert("Incorrect Username")
     }
 });
+
 function borrowModal() {
     $('#borrow-modal').modal("show");
     $(".modal-title").html($(this).children('td[data-field="title"]').children("div").html());
     isbn = $(this).children('td[data-field="isbn"]').children("div").html();
 }
-export let bookCopies  = {
+
+export let bookCopies = {
     settings: {
-        excel:{
+        excel: {
             fileName: "BookExport.xlsx",
             allPages: true
         },
@@ -68,26 +70,26 @@ export let bookCopies  = {
             schema: {
                 model: {
                     fields: {
-                        docid: { type: "number" },
-                        title: { type: "string" },
-                        pdate: { type: "date" },
+                        docid: {type: "number"},
+                        title: {type: "string"},
+                        pdate: {type: "date"},
                         publisher: {type: "string"},
-                        isbn: { type: "string" },
-                        genre: { type: "string" }
+                        isbn: {type: "string"},
+                        genre: {type: "string"}
                     }
                 }
             },
-            pageSize: 20,
+            pageSize: 15,
         }),
-        dataBound:function () {
-            $("#all-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").off("click",borrowModal);
-            $("#all-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").on("click",borrowModal);
+        dataBound: function () {
+            $("#all-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").off("click", borrowModal);
+            $("#all-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").on("click", borrowModal);
         },
         scrollable: true,
         sortable: true,
         pageable: true,
         filterable: true,
-        columns:[
+        columns: [
             {
                 field: "title",
                 title: "Title",

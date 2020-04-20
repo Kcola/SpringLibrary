@@ -35,7 +35,7 @@ import static org.junit.Assert.assertNotEquals;
 public class EndPointTests {
 
     @Test
-    public void AuthtenticateTest() throws IOException { //INTEGRATION TEST 2
+    public void AuthtenticateTest() throws IOException { //INTEGRATION TEST 5
         HttpClient client = HttpClientBuilder.create().build();
         Random rand = new Random();
         String generatedUsername = RandomStringUtils.randomAlphabetic(rand.nextInt(1000));
@@ -52,7 +52,7 @@ public class EndPointTests {
     }
 
     @Test
-    public void CurrentUserTest() throws IOException { //SYSTEM TEST 3
+    public void CurrentUserTest() throws IOException { //SYSTEM TEST 4
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost postLogin = new HttpPost("http://localhost:8080/api/authenticate");
         String jsonLogin = "{\"username\":\"bot\",\"password\":\"test123\"}";
@@ -83,7 +83,7 @@ public class EndPointTests {
     }
 
     @Test
-    public void BorrowTest() throws IOException { //SYSTEM TEST 4
+    public void BorrowTest() throws IOException { //SYSTEM TEST 5
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost postLogin = new HttpPost("http://localhost:8080/api/authenticate");
         String jsonLogin = "{\"username\":\"bot\",\"password\":\"test123\"}";

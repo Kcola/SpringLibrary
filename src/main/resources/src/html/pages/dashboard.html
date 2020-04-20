@@ -2,271 +2,334 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="css/login.css" rel="stylesheet" />
-  <title>Log In</title>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link href="css/login.css" rel="stylesheet"/>
+    <title>Log In</title>
 </head>
 
 <body>
 <div id="page-content-wrapper">
-<div id="login" class="row hidden" style="height: 92vh">
-  <div class="col col-auto ml-auto mr-auto my-auto">
-    <div class="row">
-      <div class="col col-auto d-none d-md-block">
-        <div class="row">
-          <div class="col col-auto ml-auto mr-auto my-auto">
-            <div class="row formContainer" style="width:700px">
-              <div class="col col-auto mr-auto ml-auto my-auto">
-                <div>
-                  <label class="loginLabel" for="loginForm">Register</label>
-                  <form id="registerForm" class="loginForm">
-                    <div class="form-group">
-                      <div class="row form-group">
-                        <div class="col col-auto">
-                          <input type="email" class="form-control bg-light inputs" id="registerEmail" aria-describedby="emailHelp"
-                                 placeholder="Enter Email" />
-                        </div>
-                        <div class="col col-auto">
-                          <input type="username" class="form-control bg-light inputs" id="registerUsername" aria-describedby="usernameHelp"
-                                 placeholder="Enter username" />
-                        </div>
-                      </div>
-                      <div class="row form-group">
-                        <div class="col col-auto">
-                          <input type="password" class="form-control bg-light inputs" id="registerPassword" placeholder="Password" />
-                        </div>
-                        <div class="col col-auto">
-                          <input type="password" class="form-control bg-light inputs" id="registerConfirmPassword" placeholder="Confirm Password" />
-                        </div>
-
-                      </div>
-                      <div class="row form-group">
-
-                        <div class="col col-auto">
-                          <input type="firstname" class="form-control bg-light inputs" id="registerFirstname"
-                                 placeholder="Enter First Name" />
-                        </div>
-                        <div class="col col-auto">
-
-                          <input type="username" class="form-control bg-light inputs" id="registerLastname"
-                                 placeholder="Enter Last Name" />
-                        </div>
-                      </div>
-                      <div class="row form-group">
-                      <div class="col col-auto">
-                        <input type="address" class="form-control bg-light inputs" id="registerStreetAddress" style="width: 571px"
-                               placeholder="Enter Street Address" />
-                      </div>
-                      </div>
-                      <div class="row form-group">
-                        <div class="col col-auto">
-                          <input type="city" class="form-control bg-light inputs" id="registerCity" style="width: 165px"
-                                 placeholder="Enter City" />
-                        </div>
-
-                        <div class="col col-auto">
-                          <select class="form-control" id="registerState" name="state" placeholder ="State">
-                            <option value="">State</option>
-                            <option value="AK">Alaska</option>
-                            <option value="AL">Alabama</option>
-                            <option value="AR">Arkansas</option>
-                            <option value="AZ">Arizona</option>
-                            <option value="CA">California</option>
-                            <option value="CO">Colorado</option>
-                            <option value="CT">Connecticut</option>
-                            <option value="DC">District of Columbia</option>
-                            <option value="DE">Delaware</option>
-                            <option value="FL">Florida</option>
-                            <option value="GA">Georgia</option>
-                            <option value="HI">Hawaii</option>
-                            <option value="IA">Iowa</option>
-                            <option value="ID">Idaho</option>
-                            <option value="IL">Illinois</option>
-                            <option value="IN">Indiana</option>
-                            <option value="KS">Kansas</option>
-                            <option value="KY">Kentucky</option>
-                            <option value="LA">Louisiana</option>
-                            <option value="MA">Massachusetts</option>
-                            <option value="MD">Maryland</option>
-                            <option value="ME">Maine</option>
-                            <option value="MI">Michigan</option>
-                            <option value="MN">Minnesota</option>
-                            <option value="MO">Missouri</option>
-                            <option value="MS">Mississippi</option>
-                            <option value="MT">Montana</option>
-                            <option value="NC">North Carolina</option>
-                            <option value="ND">North Dakota</option>
-                            <option value="NE">Nebraska</option>
-                            <option value="NH">New Hampshire</option>
-                            <option value="NJ">New Jersey</option>
-                            <option value="NM">New Mexico</option>
-                            <option value="NV">Nevada</option>
-                            <option value="NY">New York</option>
-                            <option value="OH">Ohio</option>
-                            <option value="OK">Oklahoma</option>
-                            <option value="OR">Oregon</option>
-                            <option value="PA">Pennsylvania</option>
-                            <option value="PR">Puerto Rico</option>
-                            <option value="RI">Rhode Island</option>
-                            <option value="SC">South Carolina</option>
-                            <option value="SD">South Dakota</option>
-                            <option value="TN">Tennessee</option>
-                            <option value="TX">Texas</option>
-                            <option value="UT">Utah</option>
-                            <option value="VA">Virginia</option>
-                            <option value="VT">Vermont</option>
-                            <option value="WA">Washington</option>
-                            <option value="WI">Wisconsin</option>
-                            <option value="WV">West Virginia</option>
-                            <option value="WY">Wyoming</option>
-                          </select>
-                        </div>
-                      <div class="col col-auto">
-                        <input type="zipcode" class="form-control bg-light inputs" id="registerZipcode" style="width: 165px"
-                               placeholder="Enter Zipcode" />
-                      </div>
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Create Account</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col col-auto">
-        <div class="row">
-          <div class="col col-auto ml-auto mr-auto my-auto">
-            <div class="row formContainer">
-              <div class="col col-auto mr-auto ml-auto my-auto" style="width:300px">
-                <div>
-                  <label class="loginLabel" for="loginForm">Log In</label>
-                  <form id="loginForm" class="loginForm">
-                    <div class="form-group">
-                      <input type="username" class="form-control bg-light inputs" id="email" aria-describedby="emailHelp"
-                             placeholder="Enter username" />
-                    </div>
-                    <div class="form-group">
-                      <input type="password" class="form-control bg-light inputs" id="password" placeholder="Password" />
-                    </div>
+    <div class="row hidden" id="login" style="height: 92vh">
+        <div class="col col-auto ml-auto mr-auto my-auto">
+            <div class="row">
+                <div class="col col-auto d-none d-md-block">
                     <div class="row">
-                      <div class="col col-auto ml-auto my-auto">
-                        <button type="submit" class="btn btn-primary" >Log In</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
+                        <div class="col col-auto ml-auto mr-auto my-auto">
+                            <div class="row formContainer" style="width:700px">
+                                <div class="col col-auto mr-auto ml-auto my-auto">
+                                    <div>
+                                        <label class="loginLabel" for="loginForm">Register</label>
+                                        <form class="loginForm" id="registerForm">
+                                            <div class="form-group">
+                                                <div class="row form-group">
+                                                    <div class="col col-auto">
+                                                        <input aria-describedby="emailHelp"
+                                                               class="form-control bg-light inputs"
+                                                               id="registerEmail" placeholder="Enter Email"
+                                                               type="email"/>
+                                                    </div>
+                                                    <div class="col col-auto">
+                                                        <input aria-describedby="usernameHelp"
+                                                               class="form-control bg-light inputs"
+                                                               id="registerUsername" placeholder="Enter username"
+                                                               type="username"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-auto">
+                                                        <input class="form-control bg-light inputs"
+                                                               id="registerPassword"
+                                                               placeholder="Password" type="password"/>
+                                                    </div>
+                                                    <div class="col col-auto">
+                                                        <input class="form-control bg-light inputs"
+                                                               id="registerConfirmPassword"
+                                                               placeholder="Confirm Password"
+                                                               type="password"/>
+                                                    </div>
 
-          </div>
+                                                </div>
+                                                <div class="row form-group">
 
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="dashboard" class="hidden">
-  <div class="d-flex" id="wrapper" >
-    <!-- Sidebar -->
-    <div class="bg-light border-right" id="sidebar-wrapper" style="height: 94vh;">
-      <div id="loggedInUser" class="sidebar-heading">User</div>
-      <div class="list-group list-group-flush">
-        <a href="#profile" class="list-group-item list-group-item-action bg-light">Profile</a>
-        <a href="#borrow" class="list-group-item list-group-item-action bg-light">Borrow</a>
-        <a href="#reserve" class="list-group-item list-group-item-action bg-light">Reserve</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Schedule Appointment</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Subscription</a>
-      </div>
-    </div>
-    <!-- Page Content -->
-      <div class="container-fluid" style="height: 91.5vh;">
-        <div class="card" style="width: 100%; height: 100%; margin-top: 12px;">
-          <div class="card-body">
-            <div id="grid"></div>
-            <div id="no-books" class="row hidden" style="height: 100%; width: 100%">
-              <div class="col col-auto ml-auto mr-auto my-auto">
-                <div class="row">
-                  <span>You have no borrowed or reserved books.</span>
-                </div>
-                <div class="row">
-                  <div class="col col-auto ml-auto mr-auto my-1">
-                    <button id="borrow-btn" class="btn btn-success" style="margin-right: 10px">Borrow</button>
-                    <button id="reserve-btn" class="btn btn-success" style="margin-left: 10px">Reserve</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div id="borrow-menu" class="row hidden">
-              <div class="col col-auto">
-                <div id="all-books-grid"></div>
-                <div id="borrow-modal" class="modal" tabindex="-1" role="dialog">
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">Borrow Book</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <form id="borrow-form" class="loginForm">
-                          <div class="form-group">
-                            <label for="borrow-duration">Duration</label>
-                            <div id="borrow-duration" class="form-group">
-                              <select name="" id="duration" class="form-control" placeholder="Pick Duration" style="margin-bottom: 10px">
-                                <option value="14d">2 weeks</option>
-                                <option value="1m">1 month</option>
-                                <option value="2m">2 months</option>
-                              </select>
-                              <label for="borrow-confirm">Confirm</label>
-                              <input id="borrow-confirm" type="username" class="form-control bg-light inputs" placeholder="Enter username to confirm">
+                                                    <div class="col col-auto">
+                                                        <input class="form-control bg-light inputs"
+                                                               id="registerFirstname"
+                                                               placeholder="Enter First Name"
+                                                               type="firstname"/>
+                                                    </div>
+                                                    <div class="col col-auto">
+
+                                                        <input class="form-control bg-light inputs"
+                                                               id="registerLastname"
+                                                               placeholder="Enter Last Name"
+                                                               type="username"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-auto">
+                                                        <input class="form-control bg-light inputs"
+                                                               id="registerStreetAddress"
+                                                               placeholder="Enter Street Address" style="width: 571px"
+                                                               type="address"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-auto">
+                                                        <input class="form-control bg-light inputs" id="registerCity"
+                                                               placeholder="Enter City" style="width: 165px"
+                                                               type="city"/>
+                                                    </div>
+
+                                                    <div class="col col-auto">
+                                                        <select class="form-control" id="registerState" name="state"
+                                                                placeholder="State">
+                                                            <option value="">State</option>
+                                                            <option value="AK">Alaska</option>
+                                                            <option value="AL">Alabama</option>
+                                                            <option value="AR">Arkansas</option>
+                                                            <option value="AZ">Arizona</option>
+                                                            <option value="CA">California</option>
+                                                            <option value="CO">Colorado</option>
+                                                            <option value="CT">Connecticut</option>
+                                                            <option value="DC">District of Columbia</option>
+                                                            <option value="DE">Delaware</option>
+                                                            <option value="FL">Florida</option>
+                                                            <option value="GA">Georgia</option>
+                                                            <option value="HI">Hawaii</option>
+                                                            <option value="IA">Iowa</option>
+                                                            <option value="ID">Idaho</option>
+                                                            <option value="IL">Illinois</option>
+                                                            <option value="IN">Indiana</option>
+                                                            <option value="KS">Kansas</option>
+                                                            <option value="KY">Kentucky</option>
+                                                            <option value="LA">Louisiana</option>
+                                                            <option value="MA">Massachusetts</option>
+                                                            <option value="MD">Maryland</option>
+                                                            <option value="ME">Maine</option>
+                                                            <option value="MI">Michigan</option>
+                                                            <option value="MN">Minnesota</option>
+                                                            <option value="MO">Missouri</option>
+                                                            <option value="MS">Mississippi</option>
+                                                            <option value="MT">Montana</option>
+                                                            <option value="NC">North Carolina</option>
+                                                            <option value="ND">North Dakota</option>
+                                                            <option value="NE">Nebraska</option>
+                                                            <option value="NH">New Hampshire</option>
+                                                            <option value="NJ">New Jersey</option>
+                                                            <option value="NM">New Mexico</option>
+                                                            <option value="NV">Nevada</option>
+                                                            <option value="NY">New York</option>
+                                                            <option value="OH">Ohio</option>
+                                                            <option value="OK">Oklahoma</option>
+                                                            <option value="OR">Oregon</option>
+                                                            <option value="PA">Pennsylvania</option>
+                                                            <option value="PR">Puerto Rico</option>
+                                                            <option value="RI">Rhode Island</option>
+                                                            <option value="SC">South Carolina</option>
+                                                            <option value="SD">South Dakota</option>
+                                                            <option value="TN">Tennessee</option>
+                                                            <option value="TX">Texas</option>
+                                                            <option value="UT">Utah</option>
+                                                            <option value="VA">Virginia</option>
+                                                            <option value="VT">Vermont</option>
+                                                            <option value="WA">Washington</option>
+                                                            <option value="WI">Wisconsin</option>
+                                                            <option value="WV">West Virginia</option>
+                                                            <option value="WY">Wyoming</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col col-auto">
+                                                        <input class="form-control bg-light inputs" id="registerZipcode"
+                                                               placeholder="Enter Zipcode" style="width: 165px"
+                                                               type="zipcode"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Create Account</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
-                        </form>
-                      </div>
-                      <div class="modal-footer">
-                        <button id="borrow" type="button" class="btn btn-primary">Borrow</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-            </div>
-            <div id="profile-menu" class="row hidden">
-              <div class="col col-auto">
-                <div id="borrowed-books-grid"></div>
-                <div id="return-modal" class="modal" tabindex="-1" role="dialog">
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">Return Book</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                      </div>
-                      <div class="modal-footer">
-                        <button id="return" type="button" class="btn btn-primary">Return</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      </div>
+                <div class="col col-auto">
+                    <div class="row">
+                        <div class="col col-auto ml-auto mr-auto my-auto">
+                            <div class="row formContainer">
+                                <div class="col col-auto mr-auto ml-auto my-auto" style="width:300px">
+                                    <div>
+                                        <label class="loginLabel" for="loginForm">Log In</label>
+                                        <form class="loginForm" id="loginForm">
+                                            <div class="form-group">
+                                                <input aria-describedby="emailHelp" class="form-control bg-light inputs"
+                                                       id="email"
+                                                       placeholder="Enter username"
+                                                       type="username"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control bg-light inputs" id="password"
+                                                       placeholder="Password" type="password"/>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-auto ml-auto my-auto">
+                                                    <button class="btn btn-primary" type="submit">Log In</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
     </div>
-    <!-- /#page-content-wrapper -->
+    <div class="hidden" id="dashboard">
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar -->
+            <div class="bg-light border-right" id="sidebar-wrapper" style="height: 94vh;">
+                <div class="sidebar-heading" id="loggedInUser">User</div>
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action bg-light" href="#profile">Profile</a>
+                    <a class="list-group-item list-group-item-action bg-light" href="#borrow">Borrow</a>
+                    <a class="list-group-item list-group-item-action bg-light" href="#reserve">Reserve</a>
+                    <a class="list-group-item list-group-item-action bg-light" href="#">Schedule Appointment</a>
+                    <a class="list-group-item list-group-item-action bg-light" href="#">Events</a>
+                    <a class="list-group-item list-group-item-action bg-light" href="#">Subscription</a>
+                </div>
+            </div>
+            <!-- Page Content -->
+            <div class="container-fluid" style="height: 91.5vh;">
+                <div class="card" style="width: 100%; height: 100%; margin-top: 12px;">
+                    <div class="card-body">
+                        <div id="grid"></div>
+                        <div class="row hidden" id="no-books" style="height: 100%; width: 100%">
+                            <div class="col col-auto ml-auto mr-auto my-auto">
+                                <div class="row">
+                                    <span>You have no borrowed or reserved books.</span>
+                                </div>
+                                <div class="row">
+                                    <div class="col col-auto ml-auto mr-auto my-1">
+                                        <button class="btn btn-success" id="borrow-btn" style="margin-right: 10px">
+                                            Borrow
+                                        </button>
+                                        <button class="btn btn-success" id="reserve-btn" style="margin-left: 10px">
+                                            Reserve
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row hidden" id="borrow-menu">
+                            <div class="col col-auto">
+                                <div id="all-books-grid"></div>
+                                <div class="modal" id="borrow-modal" role="dialog" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Borrow Book</h5>
+                                                <button aria-label="Close" class="close" data-dismiss="modal"
+                                                        type="button">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form class="loginForm" id="borrow-form">
+                                                    <div class="form-group">
+                                                        <label for="borrow-duration">Duration</label>
+                                                        <div class="form-group" id="borrow-duration">
+                                                            <select class="form-control" id="duration" name=""
+                                                                    placeholder="Pick Duration"
+                                                                    style="margin-bottom: 10px">
+                                                                <option value="14d">2 weeks</option>
+                                                                <option value="1m">1 month</option>
+                                                                <option value="2m">2 months</option>
+                                                            </select>
+                                                            <label for="borrow-confirm">Confirm</label>
+                                                            <input class="form-control bg-light inputs"
+                                                                   id="borrow-confirm"
+                                                                   placeholder="Enter username to confirm"
+                                                                   type="username">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-primary" id="borrow" type="button">Borrow
+                                                </button>
+                                                <button class="btn btn-secondary" data-dismiss="modal" type="button">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row hidden" id="profile-menu">
+                            <div class="table-main-container is-hidden" id="tableRequest"
+                                 style="width: 100%; padding:1% 1% 0 1%;">
+                                <div class="row"
+                                     style="height: 50px;">
+                                    <div class="col col-12">
+                                        <ul class="table-filter">
+                                            <li class="filter-item my-auto">
+                                                <a class="filter-link" href="#profile" id="profile-nav">
+                                                    <span class="filter-text">Borrowed</span>
+                                                </a>
+                                            </li>
+                                            <li class="filter-item my-auto">
+                                                <a class="filter-link" href="#profile" id="reserved-nav">
+                                                    <span class="filter-text">Reserved</span>
+                                                </a>
+                                            </li>
+                                            <li class="filter-item my-auto">
+                                                <a class="filter-link" href="#profile" id="history-nav">
+                                                    <span class="filter-text">History</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-auto">
+                                <div id="borrowed-books-grid"></div>
+                                <div class="modal" id="return-modal" role="dialog" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Return Book</h5>
+                                                <button aria-label="Close" class="close" data-dismiss="modal"
+                                                        type="button">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-primary" id="return" type="button">Return
+                                                </button>
+                                                <button class="btn btn-secondary" data-dismiss="modal" type="button">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /#page-content-wrapper -->
 
-  </div>
-</div>
+        </div>
+    </div>
 </div>
 <script src="app.js"></script>
 </body>

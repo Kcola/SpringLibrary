@@ -60,3 +60,39 @@ export let ut2_values =
         ]
 
     ]
+export let it1_values =
+    [
+        [
+            {
+                firstname: "Test",
+                lastname: "Bot",
+                address: "123 Bot Lane, Factory, NJ07103",
+                email: "test@example.com",
+                zipcode: "12345",
+                type: "admin",
+                password: "test321",
+                username: "bot",
+            } as NewUser, "Username already exists"],
+        [
+            {
+                firstname: "Test",
+                lastname: "Bot",
+                address: "123 Bot Lane, Factory, NJ07103",
+                email: "test@example.com",
+                zipcode: "12345",
+                type: "admin",
+                password: "test321",
+                username: "bot_",
+            } as NewUser, "Username can only contain letters and/or numbers"],
+        [
+            {
+                firstname: "Test",
+                lastname: "",
+                address: "123 Bot Lane, Factory, NJ07103",
+                email: "test@example.com",
+                zipcode: "12345",
+                type: "admin",
+                password: "test321",
+                username: "bot",
+            } as NewUser, "Fill out all registration fields"],
+    ]

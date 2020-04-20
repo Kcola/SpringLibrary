@@ -3,14 +3,8 @@ import {calculateFine} from "./functions";
 
 let bornumber: number;
 
-function returnModal() {
-    $("#return-modal").modal("show");
-    $(".modal-title").html($(this).children('td[data-field="title"]').children("div").html());
-    bornumber = parseInt($(this).children('td[data-field="bornumber"]').children("div").html());
-}
-
-
-export let borrowedBooks = {
+$("#return").off('click');
+export let history = {
     settings: {
         excel: {
             fileName: "BookExport.xlsx",
@@ -26,7 +20,7 @@ export let borrowedBooks = {
         dataSource: new kendo.data.DataSource({
             transport: {
                 read: async function (options) {
-                    const response = await fetch("/api/borrowed", {
+                    const response = await fetch("/api/history", {
                         method: "POST",
                         headers: {
                             'Content-Type': 'application/json',
@@ -54,24 +48,7 @@ export let borrowedBooks = {
             sort: {field: "duedate", dir: "asc"},
         }),
         dataBound: function () {
-            $("#borrowed-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").off("click", returnModal);
-            $("#borrowed-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").on("click", returnModal);
-            $("#return").off("click");
-            $("#return").on("click", async function () {
-                const response = await fetch("/api/return", {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-                    },
-                    body: JSON.stringify({bornumber: bornumber})
-                });
-                if (response.status === 200) {
-                    alert("Book Returned");
-                    $('#return-modal').modal("hide");
-                } else
-                    alert("Error completing transaction");
-            });
+            $("#borrowed-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").off("click");
         },
         scrollable: true,
         sortable: true,
@@ -115,6 +92,24 @@ export let borrowedBooks = {
                     return `<div class = "cut-text" ">${moment(dataRow.btime).format("LL")}</div>`;
                 },
                 headerTemplate: '<div style="font-weight: bold; color: black; ">Borrowed</div>'
+            },
+            {
+                field: "rtime",
+                title: "Return Date",
+                width: "63px",
+                filterable: {
+                    ui: function (element: any) {
+                        element.kendoDatePicker({
+                            format: '{0: dd-MM-yyyy}'
+                        })
+                    }
+                },
+                template: function (dataRow: { rtime: Date; }) {
+                    if (dataRow.rtime === null)
+                        return '<div style="font-weight: bold; color: black; "></div>';
+                    return `<div class = "cut-text" >${moment(dataRow.rtime).format("LL")}</div>`;
+                },
+                headerTemplate: '<div style="font-weight: bold; color: black; ">Return Date</div>'
             },
             {
                 field: "fines",
