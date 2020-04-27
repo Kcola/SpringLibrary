@@ -44,11 +44,40 @@ public class BooksController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value = "/api/reserve", method = RequestMethod.POST)
+    public ResponseEntity<?> ReserveBook(@RequestBody BorrowForm user) {
+        LOGGER.info("Received request from /borrow endpoint");
+        boolean flag = db.ExistsUser(user.getUsername());
+        if (flag) {
+            try {
+                int success = db.ReserveBook(user);
+                if (success > 0)
+                    return ResponseEntity.ok(success);
+                else
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } catch (Exception e) {
+                LOGGER.info(e.getMessage());
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     @RequestMapping(value = "/api/borrowed", method = RequestMethod.POST)
     public ResponseEntity<?> BorrowedBooks(@RequestBody ReaderID user) {
         LOGGER.info("Received request from /borrowed endpoint");
         try {
             List<BorrowGrid> success = db.Borrowed(user.getReaderID());
+            return ResponseEntity.ok(success);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/api/reserved", method = RequestMethod.POST)
+    public ResponseEntity<?> ReservedBooks(@RequestBody ReaderID user) {
+        LOGGER.info("Received request from /borrowed endpoint");
+        try {
+            List<ReserveGrid> success = db.Reserved(user.getReaderID());
             return ResponseEntity.ok(success);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

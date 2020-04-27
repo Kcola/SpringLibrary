@@ -1,6 +1,6 @@
 import * as puppeteer from "puppeteer";
 import {Browser} from "puppeteer";
-import {it1_values} from "./testcases";
+import {it2_values} from "./testcases";
 import {NewUser} from "../../main/resources/src/ts/interfaces";
 
 async function initialize() {
@@ -65,7 +65,7 @@ test("Empty registration form test", async () => { //INTEGRATION TEST 1
     await page.close();
 }, 10000);
 
-test.each(it1_values)("Registration alerts test", async (user: NewUser, alert: string) => { //INTEGRATION TEST 2
+test.each(it2_values)("Registration alerts test", async (user: NewUser, alert: string) => { //INTEGRATION TEST 2
     let browser = await GlobalBrowser;
     let page = await browser.newPage();
     await page.setViewport({width: 1160, height: 702});
@@ -120,6 +120,7 @@ test("Dashboard nav test", async () => { //SYSTEM TEST 1
     expect(url.includes("#profile")).toBeTruthy();
     await page.close();
 }, 20000);
+
 test("Borrow a book test", async () => { //SYSTEM TEST 2
     let browser = await GlobalBrowser;
     let page = await TestLogin(browser)

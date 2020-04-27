@@ -12,8 +12,11 @@ public class ReservesEntity {
     private String copyid;
     private int libid;
     private Date dtime;
+    private String position;
+    private Date ptime;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "resnumber")
     public int getResnumber() {
         return resnumber;
@@ -99,5 +102,25 @@ public class ReservesEntity {
         result = 31 * result + libid;
         result = 31 * result + (dtime != null ? dtime.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "position")
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    @Basic
+    @Column(name = "ptime")
+    public Date getPtime() {
+        return ptime;
+    }
+
+    public void setPtime(Date ptime) {
+        this.ptime = ptime;
     }
 }

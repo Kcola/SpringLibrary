@@ -1,7 +1,12 @@
 .ml3 {
-  font-weight: 900;
-  font-size: 6em;
+    font-weight: 900;
+    font-size: 6em;
 }
+
 body {
-  background-color: #00b3b3;
+    background-color: #00b3b3;
+}
+
+.hidden {
+    display: none;
 }

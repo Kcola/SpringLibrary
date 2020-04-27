@@ -24,7 +24,8 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="./index.html">Library</a>
-        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler"
                 data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -33,19 +34,21 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="./dashboard.html#login" id="nav-login">Log In <span class="sr-only">(current)</span></a>
+                    <a class="nav-link hidden" href="" id="nav-logout">Log Out <span
+                            class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                <li class="nav-item dropdown">
-                    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"
-                       href="#"
-                       id="navbarDropdown" role="button">
-                        Location
-                    </a>
-                    <div aria-labelledby="navbarDropdown" class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Find closest location</a>
-                        <a class="dropdown-item" href="#">View all locations</a>
-                    </div>
-                </li>
+                    <!--                <li class="nav-item dropdown">-->
+                    <!--                    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"-->
+                    <!--                       href="#"-->
+                    <!--                       id="navbarDropdown" role="button">-->
+                    <!--                        Location-->
+                    <!--                    </a>-->
+                    <!--                    <div aria-labelledby="navbarDropdown" class="dropdown-menu">-->
+                    <!--                        <a class="dropdown-item" href="#">Find closest location</a>-->
+                    <!--                        <a class="dropdown-item" href="#">View all locations</a>-->
+                    <!--                    </div>-->
+                    <!--                </li>-->
                 </li>
 
             </ul>
@@ -60,39 +63,38 @@
 </header> <!DOCTYPE html>
 <title>Teal Library</title>
 <html lang="en">
-<link href="css/index.css" rel="stylesheet" />
+<link href="css/index.css" rel="stylesheet"/>
 
 <body>
-  <div class="row" style="height: 92vh;">
+<div class="row" style="height: 92vh;">
     <div class="col col-auto ml-auto mr-auto my-auto">
-      <h1 class="ml3">Spring Library</h1>
+        <h1 class="ml3">Spring Library</h1>
     </div>
-  </div>
+</div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 <script>
-  //TODO: Move to file
-  var textWrapper = document.querySelector(".ml3");
-  textWrapper.innerHTML = textWrapper.textContent.replace(
-    /\S/g,
-    "<span class='letter'>$&</span>"
-  );
-  anime
-    .timeline({ loop: false })
-    .add({
-      targets: ".ml3 .letter",
-      opacity: [0, 1],
-      easing: "easeInOutQuad",
-      duration: 2250,
-      delay: (el, i) => 150 * (i + 1)
-    })
-    .add({
-      targets: ".ml3",
-      opacity: 1,
-      duration: 1000,
-      easing: "easeOutExpo",
-      delay: 1000
-    });
+    var textWrapper = document.querySelector(".ml3");
+    textWrapper.innerHTML = textWrapper.textContent.replace(
+        /\S/g,
+        "<span class='letter'>$&</span>"
+    );
+    anime
+        .timeline({loop: false})
+        .add({
+            targets: ".ml3 .letter",
+            opacity: [0, 1],
+            easing: "easeInOutQuad",
+            duration: 2250,
+            delay: (el, i) => 150 * (i + 1)
+        })
+        .add({
+            targets: ".ml3",
+            opacity: 1,
+            duration: 1000,
+            easing: "easeOutExpo",
+            delay: 1000
+        });
 </script>
 
 </html>

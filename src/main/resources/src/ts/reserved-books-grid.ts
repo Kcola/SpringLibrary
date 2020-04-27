@@ -1,12 +1,13 @@
 import * as moment from "moment";
-import {calculateFine} from "./functions";
 
-let bornumber: number;
+let resnumber: number;
 
-function returnModal() {
-    $("#return-modal").modal("show");
+function pickupModal(e: Event) {
+    $("#pickup-modal").modal("show");
     $(".modal-title").html($(this).children('td[data-field="title"]').children("div").html());
-    bornumber = parseInt($(this).children('td[data-field="bornumber"]').children("div").html());
+    let grid = $("#reserved-books-grid").data("kendoGrid");
+    let readerOBJ = grid.dataItem(this);
+    resnumber = readerOBJ.get("resnumber");
 }
 
 export let reservedBooks = {
@@ -25,7 +26,7 @@ export let reservedBooks = {
         dataSource: new kendo.data.DataSource({
             transport: {
                 read: async function (options) {
-                    const response = await fetch("/api/borrowed", {
+                    const response = await fetch("/api/reserved", {
                         method: "POST",
                         headers: {
                             'Content-Type': 'application/json',
@@ -40,12 +41,9 @@ export let reservedBooks = {
             schema: {
                 model: {
                     fields: {
-                        bornumber: {type: "number"},
+                        resnumber: {type: "number"},
                         title: {type: "string"},
-                        btime: {type: "date"},
-                        rtime: {type: "date"},
-                        fines: {type: "number"},
-                        duedate: {type: "date"}
+                        rtime: {type: "date"}
                     }
                 }
             },
@@ -53,8 +51,8 @@ export let reservedBooks = {
             sort: {field: "duedate", dir: "asc"},
         }),
         dataBound: function () {
-            $("#borrowed-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").off("click", returnModal);
-            $("#borrowed-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").on("click", returnModal);
+            $("#reserved-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").off("click");
+            $("#reserved-books-grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr").on("click", pickupModal);
         },
         scrollable: true,
         sortable: true,
@@ -62,14 +60,14 @@ export let reservedBooks = {
         filterable: true,
         columns: [
             {
-                field: "bornumber",
-                title: "Borrow Number",
+                field: "resnumber",
+                title: "Reserve Number",
                 width: "50px",
                 filterable: false,
-                template: function (dataRow: { bornumber: string; }) {
-                    return `<div class = "cut-text" ">${dataRow.bornumber}</div>`;
+                template: function (dataRow: { resnumber: string; }) {
+                    return `<div class = "cut-text" ">${dataRow.resnumber}</div>`;
                 },
-                headerTemplate: '<div style="font-weight: bold; color: black; ">Borrow Number</div>'
+                headerTemplate: '<div style="font-weight: bold; color: black; ">Reserve Number</div>'
             },
             {
                 field: "title",
@@ -82,26 +80,8 @@ export let reservedBooks = {
                 headerTemplate: '<div style="font-weight: bold; color: black; ">Title</div>'
             },
             {
-                field: "btime",
-                title: "Borrowed",
-                width: "63px",
-                filterable: {
-                    ui: function (element: any) {
-                        element.kendoDatePicker({
-                            format: '{0: dd-MM-yyyy}'
-                        })
-                    }
-                },
-                template: function (dataRow: { btime: Date; }) {
-                    if (dataRow.btime === null)
-                        return '<div style="font-weight: bold; color: black; "></div>';
-                    return `<div class = "cut-text" ">${moment(dataRow.btime).format("LL")}</div>`;
-                },
-                headerTemplate: '<div style="font-weight: bold; color: black; ">Borrowed</div>'
-            },
-            {
                 field: "rtime",
-                title: "Return Date",
+                title: "Reserved",
                 width: "63px",
                 filterable: {
                     ui: function (element: any) {
@@ -113,37 +93,9 @@ export let reservedBooks = {
                 template: function (dataRow: { rtime: Date; }) {
                     if (dataRow.rtime === null)
                         return '<div style="font-weight: bold; color: black; "></div>';
-                    return `<div class = "cut-text" >${moment(dataRow.rtime).format("LL")}</div>`;
+                    return `<div class = "cut-text" ">${moment(dataRow.rtime).format("LL")}</div>`;
                 },
-                headerTemplate: '<div style="font-weight: bold; color: black; ">Return Date</div>'
-            },
-            {
-                field: "fines",
-                title: "Fines",
-                width: "63px",
-                filterable: false,
-                template: function (dataRow: { duedate: Date; }) {
-                    return `<div class = "cut-text" >$${calculateFine(dataRow.duedate) > 0 ? calculateFine(dataRow.duedate) : 0}</div>`;
-                },
-                headerTemplate: '<div style="font-weight: bold; color: black; ">Fines</div>'
-            },
-            {
-                field: "duedate",
-                title: "Due",
-                width: "63px",
-                filterable: {
-                    ui: function (element: any) {
-                        element.kendoDatePicker({
-                            format: '{0: dd-MM-yyyy}'
-                        })
-                    }
-                },
-                template: function (dataRow: { duedate: Date; }) {
-                    if (dataRow.duedate === null)
-                        return '<div style="font-weight: bold; color: black; "></div>';
-                    return `<div class = "cut-text" >${moment(dataRow.duedate).format("LL")}</div>`;
-                },
-                headerTemplate: '<div style="font-weight: bold; color: black; ">Due</div>'
+                headerTemplate: '<div style="font-weight: bold; color: black; ">Reserved</div>'
             }
         ]
     } as kendo.ui.GridOptions

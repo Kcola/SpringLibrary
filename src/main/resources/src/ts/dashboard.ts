@@ -3,9 +3,16 @@ import {inputConfirmed, validateRegistrationObject, validUserName} from "./funct
 import {NewUser, Reader, ReturningUser} from "./interfaces";
 import {borrowedBooks} from "./borrowed-books-grid";
 import {history} from "./transaction-history-grid";
+import {reservedBooks} from "./reserved-books-grid";
 
 export function dashboard() {
     renderPage();
+    document.getElementById("nav-logout").addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        sessionStorage.removeItem("token");
+        window.location.reload();
+    });
     document.getElementById("loginForm")
         .addEventListener("submit", async function (e) {
             let inputUsername = document.getElementById("email")! as HTMLInputElement;
@@ -84,6 +91,7 @@ export function dashboard() {
         });
 
     function renderPage() {
+        $(".grid").html("");
         let isAuthenticated = typeof sessionStorage.getItem('token') === "string";
         renderLogin(isAuthenticated);
     }
@@ -92,32 +100,36 @@ export function dashboard() {
         .addEventListener("click", async function (e) {
             e.preventDefault();
             e.stopPropagation();
-            $("#borrowed-books-grid").html("");
+            $(".grid").html("");
             $("#borrowed-books-grid").kendoGrid(borrowedBooks.settings);
         });
     document.getElementById("reserved-nav")
         .addEventListener("click", async function (e) {
             e.preventDefault();
             e.stopPropagation();
-            $("#borrowed-books-grid").html("");
-            $("#borrowed-books-grid").kendoGrid(borrowedBooks.settings);
+            $(".grid").html("");
+            $("#reserved-books-grid").kendoGrid(reservedBooks.settings);
         });
     document.getElementById("history-nav")
         .addEventListener("click", async function (e) {
             e.preventDefault();
             e.stopPropagation();
-            $("#borrowed-books-grid").html("");
+            $(".grid").html("");
             $("#borrowed-books-grid").kendoGrid(history.settings);
         });
 
     function renderLogin(isAuthenticated: boolean) {
         if (isAuthenticated) {
-            document.getElementById("login").classList.add("hidden");
+            $("#nav-login, #login").addClass("hidden");
+            $("#nav-logout,#dashboard").removeClass("hidden");
+            if (window.location.hash === "#login")
+                window.location.hash = "profile";
             renderDashboard();
         } else {
             window.location.hash = "login"
-            document.getElementById("login").classList.remove("hidden");
-            document.getElementById("dashboard").classList.add("hidden");
+            $("#nav-login, #login").removeClass("hidden");
+            $("#nav-logout,#dashboard").addClass("hidden");
+            window.location.hash = "login";
         }
     }
 
@@ -140,12 +152,17 @@ export function dashboard() {
         if (window.location.hash == "#borrow") {
             $("#all-books-grid").html("");
             $("#all-books-grid").kendoGrid(bookCopies.settings);
-            $("#borrow-menu").removeClass("hidden");
-        } else {
-            $("#borrow-menu").addClass("hidden");
+            $("#menu, #borrow, #duration, label[for='borrow-duration']").removeClass("hidden");
+            $("#reserve").addClass("hidden");
+        }
+        if (window.location.hash == "#reserve") {
             $("#all-books-grid").html("");
+            $("#all-books-grid").kendoGrid(bookCopies.settings);
+            $("#menu, #reserve").removeClass("hidden");
+            $("#duration, label[for='borrow-duration'], #borrow").addClass("hidden");
         }
         if (window.location.hash == "#profile") {
+            $("#menu").addClass("hidden");
             $("#borrowed-books-grid").html("");
             $("#borrowed-books-grid").kendoGrid(borrowedBooks.settings);
             $("#profile-menu").removeClass("hidden");

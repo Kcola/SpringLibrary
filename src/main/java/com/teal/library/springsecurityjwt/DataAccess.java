@@ -2,11 +2,9 @@ package com.teal.library.springsecurityjwt;
 
 import com.teal.library.springsecurityjwt.models.BorrowsEntity;
 import com.teal.library.springsecurityjwt.models.ReaderEntity;
+import com.teal.library.springsecurityjwt.models.ReservesEntity;
 import com.teal.library.springsecurityjwt.models.UsersEntity;
-import com.teal.library.springsecurityjwt.viewmodels.BookGrid;
-import com.teal.library.springsecurityjwt.viewmodels.BorrowForm;
-import com.teal.library.springsecurityjwt.viewmodels.BorrowGrid;
-import com.teal.library.springsecurityjwt.viewmodels.UserForm;
+import com.teal.library.springsecurityjwt.viewmodels.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -168,6 +166,47 @@ public class DataAccess {
         }
         session.close();
         return borrowedGrid;
+    }
+
+    public int ReserveBook(BorrowForm info) {
+        Session session = HibernateORM.getSessionFactory().openSession();
+        Query query = session.createQuery("select docs.docid, copy.copyid, copy.libid, copy.position  from CopyEntity copy, DocumentEntity docs, BookEntity books where copy.docid = docs.docid and docs.docid = books.docid and books.isbn = :isbn");
+        query.setParameter("isbn", info.getIsbn());
+        List<Object[]> list = query.list();
+        Object[] prop = list.get(0);
+        Date today = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(today);
+        ReservesEntity reserve = new ReservesEntity();
+        reserve.setDtime(new java.sql.Date(today.getTime()));
+        reserve.setCopyid(prop[1].toString());
+        reserve.setDocid((Integer) prop[0]);
+        reserve.setPtime(null);
+        reserve.setReaderid(info.getReaderid());
+        reserve.setLibid((Integer) prop[2]);
+        reserve.setPosition(prop[3].toString());
+        session.beginTransaction();
+        session.save(reserve);
+        session.getTransaction().commit();
+        session.close();
+        return reserve.getResnumber();
+    }
+
+    public List<ReserveGrid> Reserved(int readerID) {
+        Session session = HibernateORM.getSessionFactory().openSession();
+        Query query = session.createQuery("Select reserves.resnumber, docs.title, reserves.dtime from ReservesEntity reserves, DocumentEntity docs where readerid = :readerID and docs.docid = reserves.docid and reserves.ptime=null");
+        query.setParameter("readerID", readerID);
+        List<Object[]> borrowed = query.list();
+        List<ReserveGrid> reserveGrid = new ArrayList<ReserveGrid>();
+        for (Object[] entry : borrowed) {
+            ReserveGrid data = new ReserveGrid();
+            data.setResnumber((Integer) entry[0]);
+            data.setTitle(entry[1].toString());
+            data.setRtime((java.sql.Date) entry[2]);
+            reserveGrid.add(data);
+        }
+        session.close();
+        return reserveGrid;
     }
 
     public List<BorrowGrid> History(int readerID) {

@@ -33,6 +33,29 @@ $("#borrow").on("click", async function () {
         alert("Incorrect Username")
     }
 });
+$("#reserve").on("click", async function () {
+    if (sessionStorage.username === $("#borrow-confirm").val()) {
+        borrowinfo.duration = $("#duration").val().toString();
+        borrowinfo.isbn = isbn;
+        borrowinfo.username = sessionStorage.getItem("username");
+        borrowinfo.readerid = JSON.parse(sessionStorage.userInfo).readerid;
+        const response = await fetch("/api/reserve", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+            },
+            body: JSON.stringify(borrowinfo)
+        });
+        if (response.status === 200) {
+            alert("Transaction completed");
+            $('#borrow-modal').modal("hide");
+        } else
+            alert("Error completing transaction");
+    } else {
+        alert("Incorrect Username")
+    }
+});
 
 function borrowModal() {
     $('#borrow-modal').modal("show");
