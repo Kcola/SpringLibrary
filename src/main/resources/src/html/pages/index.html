@@ -7,13 +7,20 @@
 <div class="row" style="height: 92vh;">
     <div class="col col-auto ml-auto mr-auto my-auto">
         <h1 class="ml3">Spring Library</h1>
+        <h3 class="desc" style="text-align: center">CRUD Library Database Web Application</h3>
     </div>
+    <img class="preview" src="images/Preview.png">
 </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 <script>
-    var textWrapper = document.querySelector(".ml3");
+    let textWrapper = document.querySelector(".ml3");
+    let desc = document.querySelector(".desc");
     textWrapper.innerHTML = textWrapper.textContent.replace(
+        /\S/g,
+        "<span class='letter'>$&</span>"
+    );
+    desc.innerHTML =desc.textContent.replace(
         /\S/g,
         "<span class='letter'>$&</span>"
     );
@@ -23,15 +30,29 @@
             targets: ".ml3 .letter",
             opacity: [0, 1],
             easing: "easeInOutQuad",
-            duration: 2250,
+            duration: 1000,
             delay: (el, i) => 150 * (i + 1)
         })
         .add({
             targets: ".ml3",
             opacity: 1,
-            duration: 1000,
+            duration: 0,
             easing: "easeOutExpo",
-            delay: 1000
+            delay: 10
+        })
+        .add({
+            targets: ".desc .letter",
+            opacity: [0, 1],
+            easing: "easeInOutQuad",
+            duration: 500,
+            delay: (el, i) => 70 * (i + 1)
+        })
+        .add({
+            targets: ".desc",
+            opacity: 1,
+            duration: 500,
+            easing: "easeOutExpo",
+            delay: 500
         });
 </script>
 

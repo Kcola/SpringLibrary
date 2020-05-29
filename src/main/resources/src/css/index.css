@@ -7,6 +7,13 @@ body {
     background-color: #00b3b3;
 }
 
+.preview {
+    width: 70vw;
+    height: 70vh;
+    object-fit: contain;
+    margin:auto;
+}
+
 .hidden {
     display: none;
 }

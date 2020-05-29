@@ -30,6 +30,9 @@ gulp.task("panini", function (done) {
 gulp.task("copy:css", function () {
   return gulp.src("src/main/resources/src/css/*.css").pipe(gulp.dest("src/main/resources/public/css/"));
 });
+gulp.task("copy:images", function () {
+    return gulp.src("src/main/resources/src/images/*").pipe(gulp.dest("src/main/resources/public/images/"));
+})
 gulp.task('ts', () => {
   return gulp.src('src/main/resources/src/ts/app.ts')
     .pipe(webpackStream(webpackConfig), webpack)
@@ -38,7 +41,7 @@ gulp.task('ts', () => {
 gulp.task('clean', function (cb) {
   rimraf('src/main/resources/public', cb);
 });
-gulp.task("build", gulp.series("clean", "copy:css", "ts", "panini"));
+gulp.task("build", gulp.series("clean","copy:images", "copy:css", "ts", "panini"));
 function resetPages(done) {
   panini.refresh();
   done();
