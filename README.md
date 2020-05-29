@@ -1,4 +1,5 @@
-#Spring Library
+# Spring Library
+
 This is a CRUD library database web application. The backend is implemented using Java Spring JWT. Frontend is implemented using TypeScript and some basic DOM manipulation.
 
 **Features Include:** 
