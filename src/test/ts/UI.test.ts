@@ -142,6 +142,7 @@ test("Borrow a book test", async () => { //SYSTEM TEST 2
     expect(dialogText).toBe("Transaction completed");
     await page.close();
 }, 20000);
+
 test("Return a book test", async () => { //SYSTEM TEST 3
     let browser = await GlobalBrowser;
     let page = await TestLogin(browser)
